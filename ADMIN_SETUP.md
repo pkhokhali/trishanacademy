@@ -50,24 +50,36 @@ npm install
 ### 2. Environment Variables
 Create a `.env` file in the root directory:
 ```env
-MONGODB_URI=mongodb://localhost:27017/trishan-academy
+MONGODB_URI=mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority
 JWT_SECRET=your-secret-key-change-in-production
 PORT=5000
 NODE_ENV=development
 ```
 
+**MongoDB Atlas Connection:**
+If you're using MongoDB Atlas (cloud MongoDB), add the database name to your connection string before the query parameters (`?`).
+
+**Your Connection String:**
+```
+mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/?retryWrites=true&w=majority
+```
+
+**Add Database Name:**
+Insert the database name (`trishan-academy`) before the `?`:
+```
+mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority
+```
+
 **Using Existing MongoDB Connection:**
-If you already have a MongoDB connection (like `clinic-management`), you can use the same connection string but with a different database name. MongoDB allows multiple databases in the same instance.
+If you already have other databases in the same MongoDB Atlas cluster (like `clinic-management`), you can use the same connection string but with a different database name. MongoDB allows multiple databases in the same cluster.
 
 **Example:**
-- Your existing connection: `mongodb://localhost:27017/clinic-management`
-- For this project, use: `mongodb://localhost:27017/trishan-academy`
-- Same MongoDB instance, different database name
+- Your existing connection: `mongodb+srv://...mongodb.net/clinic-management?retryWrites=true&w=majority`
+- For this project, use: `mongodb+srv://...mongodb.net/trishan-academy?retryWrites=true&w=majority`
+- Same MongoDB cluster, different database name
 
-The connection string format is: `mongodb://[host]:[port]/[database-name]`
-
-### 3. Start MongoDB
-Make sure MongoDB is running on your system. If you're already using MongoDB for other projects, it should already be running.
+### 3. MongoDB Setup
+No need to install MongoDB locally - you're using MongoDB Atlas (cloud). Just make sure your connection string is correct in the `.env` file.
 
 ### 4. Run the Application
 
@@ -90,6 +102,14 @@ npm run dev:full
 ### For Vercel (Frontend)
 The frontend can be deployed to Vercel as usual. The `vercel.json` is already configured.
 
+**Setting Environment Variables in Vercel:**
+1. Go to your project in Vercel dashboard
+2. Navigate to Settings → Environment Variables
+3. Add these variables:
+   - `MONGODB_URI`: `mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority`
+   - `JWT_SECRET`: (generate a strong random string)
+   - `NODE_ENV`: `production`
+
 ### For Backend
 You'll need to deploy the backend separately to a service like:
 - Heroku
@@ -97,10 +117,11 @@ You'll need to deploy the backend separately to a service like:
 - Render
 - DigitalOcean
 - AWS
+- Vercel (as a serverless function - requires additional setup)
 
 Make sure to:
 1. Set environment variables in your hosting platform
-2. Update MongoDB URI to your production database
+2. Use your MongoDB Atlas connection string with the database name
 3. Change JWT_SECRET to a strong random string
 4. Update API URLs in the frontend if needed
 

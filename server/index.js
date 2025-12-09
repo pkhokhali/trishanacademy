@@ -37,10 +37,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // MongoDB Connection
-// Use the same MongoDB instance but with a different database name
-// Example: mongodb://localhost:27017/trishan-academy
-// If you have clinic-management database, use: mongodb://localhost:27017/trishan-academy
-// (same connection, different database name)
+// MongoDB Atlas connection string format:
+// mongodb+srv://username:password@cluster.mongodb.net/database-name?retryWrites=true&w=majority
+// For existing connection, just add the database name before the query parameters
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/trishan-academy'
 
 mongoose.connect(MONGODB_URI)
