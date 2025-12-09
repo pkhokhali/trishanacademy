@@ -56,8 +56,18 @@ PORT=5000
 NODE_ENV=development
 ```
 
+**Using Existing MongoDB Connection:**
+If you already have a MongoDB connection (like `clinic-management`), you can use the same connection string but with a different database name. MongoDB allows multiple databases in the same instance.
+
+**Example:**
+- Your existing connection: `mongodb://localhost:27017/clinic-management`
+- For this project, use: `mongodb://localhost:27017/trishan-academy`
+- Same MongoDB instance, different database name
+
+The connection string format is: `mongodb://[host]:[port]/[database-name]`
+
 ### 3. Start MongoDB
-Make sure MongoDB is running on your system.
+Make sure MongoDB is running on your system. If you're already using MongoDB for other projects, it should already be running.
 
 ### 4. Run the Application
 

@@ -37,10 +37,17 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // MongoDB Connection
+// Use the same MongoDB instance but with a different database name
+// Example: mongodb://localhost:27017/trishan-academy
+// If you have clinic-management database, use: mongodb://localhost:27017/trishan-academy
+// (same connection, different database name)
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/trishan-academy'
 
 mongoose.connect(MONGODB_URI)
-  .then(() => console.log('MongoDB connected successfully'))
+  .then(() => {
+    console.log('MongoDB connected successfully')
+    console.log(`Database: ${mongoose.connection.name}`)
+  })
   .catch((err) => console.error('MongoDB connection error:', err))
 
 const PORT = process.env.PORT || 5000
