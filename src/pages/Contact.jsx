@@ -50,7 +50,7 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6" />,
       title: 'Email',
-      details: 'info@excellenceacademy.edu'
+      details: 'info@trishanacademy.edu'
     },
     {
       icon: <Clock className="h-6 w-6" />,

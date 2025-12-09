@@ -12,7 +12,7 @@ const Footer = () => {
               <div className="bg-gradient-to-br from-primary-600 to-primary-400 p-2 rounded-lg">
                 <GraduationCap className="h-5 w-5 text-white" />
               </div>
-              <h3 className="text-xl font-bold">Excellence Academy</h3>
+              <h3 className="text-xl font-bold">Trishan Academy</h3>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed">
               Empowering students to achieve excellence through innovative education, 
@@ -104,7 +104,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-primary-400 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">info@excellenceacademy.edu</span>
+                <span className="text-gray-400 text-sm">info@trishanacademy.edu</span>
               </li>
             </ul>
           </div>
@@ -112,7 +112,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-400 text-sm">
-            © {new Date().getFullYear()} Excellence Academy. All rights reserved.
+            © {new Date().getFullYear()} Trishan Academy. All rights reserved.
           </p>
         </div>
       </div>

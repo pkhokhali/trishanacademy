@@ -76,7 +76,7 @@ const Home = () => {
               <span className="block gradient-text">Leaders</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Excellence Academy is dedicated to nurturing young minds through innovative 
+              Trishan Academy is dedicated to nurturing young minds through innovative 
               education, personalized learning, and holistic development.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -120,7 +120,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Why Choose <span className="gradient-text">Excellence Academy</span>?
+              Why Choose <span className="gradient-text">Trishan Academy</span>?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               We provide an exceptional educational experience that prepares students for success
@@ -186,7 +186,7 @@ const Home = () => {
               What Parents & Students Say
             </h2>
             <p className="text-xl text-primary-100 max-w-2xl mx-auto">
-              Hear from our community about their experience at Excellence Academy
+              Hear from our community about their experience at Trishan Academy
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -198,7 +198,7 @@ const Home = () => {
                   ))}
                 </div>
                 <p className="text-primary-50 mb-6 leading-relaxed">
-                  "Excellence Academy has transformed my child's learning experience. 
+                  "Trishan Academy has transformed my child's learning experience. 
                   The teachers are dedicated, and the curriculum is outstanding."
                 </p>
                 <div className="flex items-center space-x-4">
@@ -225,7 +225,7 @@ const Home = () => {
             Ready to Begin Your Journey?
           </h2>
           <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
-            Join Excellence Academy today and give your child the gift of exceptional education
+            Join Trishan Academy today and give your child the gift of exceptional education
           </p>
           <Link
             to="/contact"

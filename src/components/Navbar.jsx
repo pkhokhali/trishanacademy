@@ -38,7 +38,7 @@ const Navbar = () => {
               <GraduationCap className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold gradient-text">Excellence Academy</h1>
+              <h1 className="text-xl font-bold gradient-text">Trishan Academy</h1>
               <p className="text-xs text-gray-600">Shaping Future Leaders</p>
             </div>
           </Link>

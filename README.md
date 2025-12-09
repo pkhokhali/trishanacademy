@@ -1,4 +1,4 @@
-# Excellence Academy - School Website
+# Trishan Academy - School Website
 
 A modern, responsive school website built with React and Vite, designed for deployment on Vercel.
 

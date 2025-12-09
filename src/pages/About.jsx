@@ -36,7 +36,7 @@ const About = () => {
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center bg-gradient-to-br from-primary-600 to-primary-700 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">About Excellence Academy</h1>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">About Trishan Academy</h1>
           <p className="text-xl text-primary-100 max-w-3xl mx-auto">
             Empowering students to achieve their full potential through innovative education 
             and personalized learning experiences.
@@ -85,7 +85,7 @@ const About = () => {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white p-8 md:p-12 rounded-2xl shadow-lg">
               <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                Excellence Academy was founded in 1998 with a simple yet powerful vision: 
+                Trishan Academy was founded in 1998 with a simple yet powerful vision: 
                 to create an educational environment where every student can thrive and 
                 reach their full potential.
               </p>
@@ -96,7 +96,7 @@ const About = () => {
                 supportive community, has made us a leader in education.
               </p>
               <p className="text-gray-700 text-lg leading-relaxed">
-                Today, Excellence Academy continues to evolve, embracing new technologies 
+                Today, Trishan Academy continues to evolve, embracing new technologies 
                 and methodologies while maintaining our core values of excellence, integrity, 
                 and student-centered learning.
               </p>
