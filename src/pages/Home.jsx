@@ -7,7 +7,14 @@ import {
   ArrowRight,
   CheckCircle,
   Star,
-  TrendingUp
+  TrendingUp,
+  Sparkles,
+  Zap,
+  Heart,
+  Target,
+  Play,
+  Calendar,
+  Clock
 } from 'lucide-react'
 
 const Home = () => {
@@ -35,10 +42,10 @@ const Home = () => {
   ]
 
   const stats = [
-    { number: '5000+', label: 'Students Enrolled' },
-    { number: '200+', label: 'Expert Teachers' },
-    { number: '95%', label: 'Success Rate' },
-    { number: '25+', label: 'Years of Excellence' }
+    { number: '5000+', label: 'Students Enrolled', icon: <Users className="h-6 w-6" />, color: 'from-blue-500 to-blue-600' },
+    { number: '200+', label: 'Expert Teachers', icon: <GraduationCap className="h-6 w-6" />, color: 'from-purple-500 to-purple-600' },
+    { number: '95%', label: 'Success Rate', icon: <TrendingUp className="h-6 w-6" />, color: 'from-green-500 to-green-600' },
+    { number: '25+', label: 'Years of Excellence', icon: <Award className="h-6 w-6" />, color: 'from-orange-500 to-orange-600' }
   ]
 
   const programs = [
@@ -62,50 +69,100 @@ const Home = () => {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-50">
-        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+        </div>
+        
+        {/* Floating Icons */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <Sparkles className="absolute top-1/4 left-1/4 text-white/20 h-8 w-8 animate-pulse" style={{ animationDelay: '0s' }} />
+          <Star className="absolute top-1/3 right-1/4 text-white/20 h-6 w-6 animate-pulse" style={{ animationDelay: '1s' }} />
+          <Zap className="absolute bottom-1/4 left-1/3 text-white/20 h-7 w-7 animate-pulse" style={{ animationDelay: '2s' }} />
+          <Heart className="absolute top-1/2 right-1/3 text-white/20 h-6 w-6 animate-pulse" style={{ animationDelay: '1.5s' }} />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="text-center space-y-8 animate-fade-in-up">
-            <div className="inline-block">
-              <span className="bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold">
-                🎓 Premier Educational Institution
+            <div className="inline-block animate-bounce-slow">
+              <span className="bg-white/20 backdrop-blur-md text-white px-6 py-3 rounded-full text-sm font-semibold border border-white/30 flex items-center space-x-2">
+                <Sparkles className="h-4 w-4" />
+                <span>Premier Educational Institution</span>
               </span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">
               Empowering Future
-              <span className="block gradient-text">Leaders</span>
+              <span className="block bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 bg-clip-text text-transparent animate-gradient">
+                Leaders
+              </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
               Trishan Academy is dedicated to nurturing young minds through innovative 
               education, personalized learning, and holistic development.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <Link
                 to="/contact"
-                className="bg-gradient-to-r from-primary-600 to-primary-500 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all flex items-center space-x-2"
+                className="group bg-white text-primary-600 px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all flex items-center space-x-2 relative overflow-hidden"
               >
-                <span>Enroll Now</span>
-                <ArrowRight className="h-5 w-5" />
+                <span className="relative z-10">Enroll Now</span>
+                <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary-50 to-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </Link>
               <Link
                 to="/about"
-                className="bg-white text-primary-600 px-8 py-4 rounded-full font-semibold text-lg border-2 border-primary-600 hover:bg-primary-50 transition-all"
+                className="bg-white/10 backdrop-blur-md text-white px-10 py-4 rounded-full font-semibold text-lg border-2 border-white/30 hover:bg-white/20 transition-all flex items-center space-x-2"
               >
-                Learn More
+                <Play className="h-5 w-5" />
+                <span>Watch Video</span>
               </Link>
+            </div>
+            
+            {/* Quick Stats in Hero */}
+            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pt-12">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-1">25+</div>
+                <div className="text-white/80 text-sm">Years Experience</div>
+              </div>
+              <div className="text-center border-x border-white/20">
+                <div className="text-3xl font-bold text-white mb-1">5000+</div>
+                <div className="text-white/80 text-sm">Happy Students</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white mb-1">95%</div>
+                <div className="text-white/80 text-sm">Success Rate</div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/50 rounded-full mt-2"></div>
+          </div>
+        </div>
+        
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"></div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="py-20 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-50/50 via-transparent to-primary-50/50"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold gradient-text mb-2">
+              <div 
+                key={index} 
+                className="group text-center p-6 rounded-2xl bg-gradient-to-br from-white to-gray-50 border-2 border-gray-100 hover:border-primary-200 hover:shadow-xl transition-all hover:-translate-y-2"
+              >
+                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${stat.color} text-white mb-4 group-hover:scale-110 transition-transform shadow-lg`}>
+                  {stat.icon}
+                </div>
+                <div className="text-4xl md:text-5xl font-bold gradient-text mb-2 group-hover:scale-110 transition-transform">
                   {stat.number}
                 </div>
                 <div className="text-gray-600 font-medium">{stat.label}</div>
@@ -116,27 +173,39 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-200 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <div className="text-center mb-20">
+            <div className="inline-block mb-4">
+              <span className="bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold">
+                Why Choose Us
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Why Choose <span className="gradient-text">Trishan Academy</span>?
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
               We provide an exceptional educational experience that prepares students for success
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 group"
+                className="group relative bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-3 border border-gray-100 overflow-hidden"
               >
-                <div className="bg-gradient-to-br from-primary-100 to-primary-50 w-16 h-16 rounded-xl flex items-center justify-center text-primary-600 mb-6 group-hover:scale-110 transition-transform">
-                  {feature.icon}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary-100/50 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative z-10">
+                  <div className="bg-gradient-to-br from-primary-600 to-primary-500 w-20 h-20 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all shadow-lg">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-gray-900">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+                  <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <CheckCircle className="h-5 w-5 text-primary-600" />
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -144,13 +213,19 @@ const Home = () => {
       </section>
 
       {/* Programs Section */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+      <section className="py-24 bg-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.05),transparent)]"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-block mb-4">
+              <span className="bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold">
+                Our Offerings
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               Our <span className="gradient-text">Programs</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Comprehensive educational programs designed for every stage of learning
             </p>
           </div>
@@ -158,20 +233,24 @@ const Home = () => {
             {programs.map((program, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-primary-50 to-white p-8 rounded-2xl border-2 border-primary-100 hover:border-primary-300 transition-all hover:shadow-xl group"
+                className="group relative bg-gradient-to-br from-white via-primary-50/30 to-white p-8 rounded-3xl border-2 border-primary-100 hover:border-primary-400 transition-all hover:shadow-2xl hover:-translate-y-2 overflow-hidden"
               >
-                <div className="bg-primary-600 w-14 h-14 rounded-xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
-                  {program.icon}
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-600 via-primary-400 to-primary-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                <div className="relative z-10">
+                  <div className="bg-gradient-to-br from-primary-600 to-primary-500 w-16 h-16 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all shadow-lg">
+                    {program.icon}
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900">{program.title}</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">{program.description}</p>
+                  <Link
+                    to="/programs"
+                    className="inline-flex items-center space-x-2 text-primary-600 font-semibold group-hover:text-primary-700 transition-colors"
+                  >
+                    <span>Learn More</span>
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
-                <h3 className="text-2xl font-bold mb-4">{program.title}</h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">{program.description}</p>
-                <Link
-                  to="/programs"
-                  className="text-primary-600 font-semibold flex items-center space-x-2 group-hover:space-x-3 transition-all"
-                >
-                  <span>Learn More</span>
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
+                <div className="absolute bottom-0 right-0 w-24 h-24 bg-primary-100/20 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
             ))}
           </div>
@@ -179,37 +258,44 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-600 to-primary-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+      <section className="py-24 bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-block mb-4">
+              <span className="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-semibold border border-white/30">
+                Testimonials
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               What Parents & Students Say
             </h2>
-            <p className="text-xl text-primary-100 max-w-2xl mx-auto">
+            <p className="text-xl text-primary-100 max-w-2xl mx-auto leading-relaxed">
               Hear from our community about their experience at Trishan Academy
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white/10 backdrop-blur-md p-8 rounded-2xl border border-white/20">
-                <div className="flex items-center space-x-1 mb-4">
+            {[
+              { name: 'Sarah Mitchell', initials: 'SM', role: 'Parent', text: "Trishan Academy has transformed my child's learning experience. The teachers are dedicated, and the curriculum is outstanding. My daughter has grown so much!" },
+              { name: 'John Davis', initials: 'JD', role: 'Parent', text: "The personalized attention and innovative teaching methods have made a huge difference. My son is more engaged and excited about learning than ever before." },
+              { name: 'Rachel Kim', initials: 'RK', role: 'Parent', text: "We couldn't be happier with our choice. The holistic approach to education and the supportive community make Trishan Academy truly special." }
+            ].map((testimonial, i) => (
+              <div key={i} className="group bg-white/10 backdrop-blur-lg p-8 rounded-3xl border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all hover:-translate-y-2 hover:shadow-2xl">
+                <div className="flex items-center space-x-1 mb-6">
                   {[...Array(5)].map((_, j) => (
                     <Star key={j} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <p className="text-primary-50 mb-6 leading-relaxed">
-                  "Trishan Academy has transformed my child's learning experience. 
-                  The teachers are dedicated, and the curriculum is outstanding."
+                <p className="text-white/90 mb-6 leading-relaxed text-lg italic">
+                  "{testimonial.text}"
                 </p>
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center font-bold">
-                    {i === 1 ? 'SM' : i === 2 ? 'JD' : 'RK'}
+                <div className="flex items-center space-x-4 pt-4 border-t border-white/20">
+                  <div className="w-14 h-14 bg-gradient-to-br from-white/30 to-white/10 rounded-full flex items-center justify-center font-bold text-lg border-2 border-white/30">
+                    {testimonial.initials}
                   </div>
                   <div>
-                    <div className="font-semibold">
-                      {i === 1 ? 'Sarah Mitchell' : i === 2 ? 'John Davis' : 'Rachel Kim'}
-                    </div>
-                    <div className="text-primary-200 text-sm">Parent</div>
+                    <div className="font-semibold text-lg">{testimonial.name}</div>
+                    <div className="text-primary-200 text-sm">{testimonial.role}</div>
                   </div>
                 </div>
               </div>
@@ -219,21 +305,46 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-600 to-primary-500 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      <section className="py-24 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,255,255,0.1),transparent)]"></div>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <div className="inline-block mb-6">
+            <Target className="h-16 w-16 text-white/30 mx-auto animate-pulse" />
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
             Ready to Begin Your Journey?
           </h2>
-          <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed">
             Join Trishan Academy today and give your child the gift of exceptional education
           </p>
-          <Link
-            to="/contact"
-            className="inline-flex items-center space-x-2 bg-white text-primary-600 px-8 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all"
-          >
-            <span>Get Started Now</span>
-            <ArrowRight className="h-5 w-5" />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Link
+              to="/contact"
+              className="group inline-flex items-center space-x-3 bg-white text-primary-600 px-10 py-5 rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all relative overflow-hidden"
+            >
+              <span className="relative z-10">Get Started Now</span>
+              <ArrowRight className="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-50 to-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </Link>
+            <Link
+              to="/programs"
+              className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md text-white px-10 py-5 rounded-full font-semibold text-lg border-2 border-white/30 hover:bg-white/20 transition-all"
+            >
+              <Calendar className="h-5 w-5" />
+              <span>Schedule Visit</span>
+            </Link>
+          </div>
+          <div className="mt-12 flex items-center justify-center space-x-8 text-white/80 text-sm">
+            <div className="flex items-center space-x-2">
+              <Clock className="h-4 w-4" />
+              <span>Open Enrollment</span>
+            </div>
+            <div className="w-1 h-1 bg-white/50 rounded-full"></div>
+            <div className="flex items-center space-x-2">
+              <CheckCircle className="h-4 w-4" />
+              <span>Limited Seats</span>
+            </div>
+          </div>
         </div>
       </section>
     </div>
