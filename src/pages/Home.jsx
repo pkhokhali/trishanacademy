@@ -72,17 +72,17 @@ const Home = () => {
       <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
         </div>
         
         {/* Floating Icons */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <Sparkles className="absolute top-1/4 left-1/4 text-white/20 h-8 w-8 animate-pulse" style={{ animationDelay: '0s' }} />
-          <Star className="absolute top-1/3 right-1/4 text-white/20 h-6 w-6 animate-pulse" style={{ animationDelay: '1s' }} />
-          <Zap className="absolute bottom-1/4 left-1/3 text-white/20 h-7 w-7 animate-pulse" style={{ animationDelay: '2s' }} />
-          <Heart className="absolute top-1/2 right-1/3 text-white/20 h-6 w-6 animate-pulse" style={{ animationDelay: '1.5s' }} />
+          <Sparkles className="absolute top-1/4 left-1/4 text-white/20 h-8 w-8 animate-pulse" />
+          <Star className="absolute top-1/3 right-1/4 text-white/20 h-6 w-6 animate-pulse animation-delay-1000" />
+          <Zap className="absolute bottom-1/4 left-1/3 text-white/20 h-7 w-7 animate-pulse animation-delay-2000" />
+          <Heart className="absolute top-1/2 right-1/3 text-white/20 h-6 w-6 animate-pulse animation-delay-1500" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
