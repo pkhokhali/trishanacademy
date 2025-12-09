@@ -1,6 +1,6 @@
 # Trishan Academy - School Website
 
-A modern, responsive school website built with React and Vite, designed for deployment on Vercel.
+A modern, responsive school website built with MERN stack (MongoDB, Express, React, Node.js), designed for deployment on Vercel.
 
 ## Features
 
@@ -9,14 +9,26 @@ A modern, responsive school website built with React and Vite, designed for depl
 - ⚡ Fast performance with Vite
 - 🎯 SEO-friendly structure
 - 🚀 Ready for Vercel deployment
+- 🔐 Admin panel for content management
+- 📝 Dynamic content editing (navigation, social links, images, maps)
 
 ## Tech Stack
 
+### Frontend
 - **React 18** - UI library
 - **React Router** - Navigation
 - **Tailwind CSS** - Styling
 - **Vite** - Build tool
 - **Lucide React** - Icons
+- **Axios** - HTTP client
+
+### Backend
+- **Node.js** - Runtime environment
+- **Express** - Web framework
+- **MongoDB** - Database
+- **Mongoose** - ODM
+- **JWT** - Authentication
+- **Multer** - File uploads
 
 ## Getting Started
 
@@ -46,14 +58,33 @@ npm run build
 npm run preview
 ```
 
-## Deployment to Vercel
+## Admin Panel
 
+The website includes a full admin panel for content management. See [ADMIN_SETUP.md](./ADMIN_SETUP.md) for detailed setup instructions.
+
+**Quick Access:**
+- Login URL: `/login` (not linked anywhere - manual access only)
+- Default credentials: `admin` / `admin123` (⚠️ Change in production!)
+
+**Admin Features:**
+- Content management (school name, tagline, hero text, etc.)
+- Navigation menu editor
+- Social media links (Facebook, Instagram, YouTube, LinkedIn)
+- Image uploads (logo, favicon, hero image)
+- Google Maps integration
+
+## Deployment
+
+### Frontend (Vercel)
 1. Push your code to GitHub
 2. Import your repository in Vercel
 3. Vercel will automatically detect the Vite configuration
 4. Deploy!
 
 The `vercel.json` file is already configured for optimal deployment.
+
+### Backend
+The backend needs to be deployed separately to a service like Heroku, Railway, Render, or DigitalOcean. See [ADMIN_SETUP.md](./ADMIN_SETUP.md) for details.
 
 ## Project Structure
 
