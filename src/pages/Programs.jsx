@@ -1,4 +1,4 @@
-import { BookOpen, Users, GraduationCap, Music, Palette, Sports, Code, Globe } from 'lucide-react'
+import { BookOpen, Users, GraduationCap, Music, Palette, Activity, Code, Globe } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 
@@ -49,7 +49,7 @@ const Programs = () => {
       description: 'Explore creativity through music, visual arts, theater, and dance programs.'
     },
     {
-      icon: <Sports className="h-8 w-8" />,
+      icon: <Activity className="h-8 w-8" />,
       title: 'Athletics',
       description: 'Competitive sports teams and physical fitness programs for all skill levels.'
     },
