@@ -144,40 +144,65 @@ export default function Admin() {
         if (data.gallery) setGallery(data.gallery)
         if (data.pageContent) {
           // Deep merge function to preserve nested structure
-          const isObject = (item) => item && typeof item === 'object' && !Array.isArray(item)
+          const isObject = (item) => item && typeof item === 'object' && !Array.isArray(item) && item !== null
           
           const mergeDeep = (target, source) => {
             if (!source) return target
+            if (!isObject(target) || !isObject(source)) return source || target
+            
             const output = { ...target }
-            if (isObject(target) && isObject(source)) {
-              Object.keys(source).forEach(key => {
-                if (isObject(source[key])) {
-                  if (!(key in target) || !isObject(target[key])) {
-                    output[key] = { ...source[key] }
-                  } else {
-                    output[key] = mergeDeep(target[key], source[key])
-                  }
-                } else if (Array.isArray(source[key])) {
-                  // Handle arrays - use source if it has items, otherwise keep target
-                  output[key] = source[key].length > 0 ? source[key] : (target[key] || [])
+            
+            // First, copy all keys from source
+            Object.keys(source).forEach(key => {
+              if (isObject(source[key])) {
+                // If both are objects, merge recursively
+                if (isObject(target[key])) {
+                  output[key] = mergeDeep(target[key], source[key])
                 } else {
-                  // For strings and other primitives, use source if it has value
-                  output[key] = source[key] || target[key] || ''
+                  // If target doesn't have this key or it's not an object, use source
+                  output[key] = { ...source[key] }
                 }
-              })
-            }
+              } else if (Array.isArray(source[key])) {
+                // For arrays, use source if it exists (even if empty)
+                output[key] = Array.isArray(source[key]) ? [...source[key]] : (target[key] || [])
+              } else {
+                // For primitives, use source value (even if empty string)
+                // Check if source has the key, not just if it's truthy
+                if (key in source) {
+                  output[key] = source[key]
+                } else if (key in target) {
+                  output[key] = target[key]
+                }
+              }
+            })
+            
+            // Also preserve keys from target that don't exist in source
+            Object.keys(target).forEach(key => {
+              if (!(key in source)) {
+                output[key] = target[key]
+              }
+            })
+            
             return output
           }
           
           // Merge loaded data with default structure
           try {
+            console.log('Raw pageContent from DB:', JSON.stringify(data.pageContent, null, 2))
             const merged = mergeDeep(pageContent, data.pageContent)
+            console.log('Merged page content:', JSON.stringify(merged, null, 2))
             setPageContent(merged)
-            console.log('Loaded page content:', merged)
           } catch (error) {
             console.error('Error merging page content:', error)
-            // Fallback: use loaded data directly if merge fails
-            setPageContent(data.pageContent)
+            // Fallback: merge manually
+            const fallback = {
+              home: { ...pageContent.home, ...(data.pageContent.home || {}) },
+              about: { ...pageContent.about, ...(data.pageContent.about || {}) },
+              programs: { ...pageContent.programs, ...(data.pageContent.programs || {}) },
+              contact: { ...pageContent.contact, ...(data.pageContent.contact || {}) },
+              gallery: { ...pageContent.gallery, ...(data.pageContent.gallery || {}) }
+            }
+            setPageContent(fallback)
           }
         }
       }

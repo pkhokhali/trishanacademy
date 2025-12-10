@@ -16,7 +16,10 @@ export default function ComprehensivePageEditor({
   
   // Debug: Log received data
   useEffect(() => {
-    console.log(`Page Editor for ${pageName} received data:`, pageData)
+    console.log(`Page Editor for ${pageName} received data:`, JSON.stringify(pageData, null, 2))
+    console.log(`Page Editor for ${pageName} - Hero section:`, pageData?.hero)
+    console.log(`Page Editor for ${pageName} - Stats section:`, pageData?.stats)
+    console.log(`Page Editor for ${pageName} - Features section:`, pageData?.features)
   }, [pageName, pageData])
   
   const isEditing = (sectionKey, fieldKey) => {
