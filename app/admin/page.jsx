@@ -483,20 +483,52 @@ export default function Admin() {
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
                 <input
                   type="text"
-                  value={content.heroTitle}
-                  onChange={(e) => setContent({ ...content, heroTitle: e.target.value })}
+                  value={content.heroTitle || pageContent.home?.hero?.title || ''}
+                  onChange={(e) => {
+                    setContent({ ...content, heroTitle: e.target.value })
+                    // Also update pageContent.home.hero.title in real-time
+                    setPageContent(prev => ({
+                      ...prev,
+                      home: {
+                        ...prev.home,
+                        hero: {
+                          ...prev.home.hero,
+                          title: e.target.value
+                        }
+                      }
+                    }))
+                  }}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  placeholder="Enter hero title (e.g., Empowering Future Leaders)"
                 />
+                {pageContent.home?.hero?.title && (
+                  <p className="text-xs text-gray-500 mt-1 italic">Current on homepage: &quot;{pageContent.home.hero.title}&quot;</p>
+                )}
               </div>
 
               <div className="md:col-span-2">
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
-                <textarea
-                  value={content.heroSubtitle}
-                  onChange={(e) => setContent({ ...content, heroSubtitle: e.target.value })}
-                  rows="3"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                <RichTextEditor
+                  value={content.heroSubtitle || pageContent.home?.hero?.subtitle || ''}
+                  onChange={(value) => {
+                    setContent({ ...content, heroSubtitle: value })
+                    // Also update pageContent.home.hero.subtitle in real-time
+                    setPageContent(prev => ({
+                      ...prev,
+                      home: {
+                        ...prev.home,
+                        hero: {
+                          ...prev.home.hero,
+                          subtitle: value
+                        }
+                      }
+                    }))
+                  }}
+                  placeholder="Enter hero subtitle"
                 />
+                {pageContent.home?.hero?.subtitle && (
+                  <p className="text-xs text-gray-500 mt-1 italic">Current content is set on homepage</p>
+                )}
               </div>
 
               <div className="md:col-span-2">
