@@ -32,7 +32,21 @@ export default function Home() {
     try {
       const response = await fetch('/api/settings')
       const settings = await response.json()
-      setPageData(settings.pageContent?.home || {})
+      
+      // Merge pageContent.home with content object for backward compatibility
+      const homePageContent = settings.pageContent?.home || {}
+      const generalContent = settings.content || {}
+      
+      // If hero title/subtitle exist in content object, use them
+      if (generalContent.heroTitle && !homePageContent.hero?.title) {
+        homePageContent.hero = {
+          ...homePageContent.hero,
+          title: generalContent.heroTitle,
+          subtitle: generalContent.heroSubtitle || homePageContent.hero?.subtitle || ''
+        }
+      }
+      
+      setPageData(homePageContent)
     } catch (error) {
       console.error('Error loading page content:', error)
     } finally {

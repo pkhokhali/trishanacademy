@@ -224,6 +224,20 @@ export default function Admin() {
 
     try {
       const token = localStorage.getItem('adminToken')
+      
+      // Map General tab content to pageContent.home structure
+      const updatedPageContent = {
+        ...pageContent,
+        home: {
+          ...pageContent.home,
+          hero: {
+            ...pageContent.home.hero,
+            title: content.heroTitle || pageContent.home.hero?.title || '',
+            subtitle: content.heroSubtitle || pageContent.home.hero?.subtitle || ''
+          }
+        }
+      }
+      
       const response = await fetch('/api/admin/settings', {
         method: 'POST',
         headers: { 
@@ -237,7 +251,7 @@ export default function Admin() {
           images,
           googleMaps,
           gallery,
-          pageContent
+          pageContent: updatedPageContent
         })
       })
 
@@ -373,7 +387,6 @@ export default function Admin() {
 
   const tabs = [
     { id: 'content', label: 'General', icon: Settings },
-    { id: 'pages', label: 'Pages', icon: FileText },
     { id: 'navigation', label: 'Navigation', icon: Navigation },
     { id: 'gallery', label: 'Gallery', icon: Camera },
     { id: 'social', label: 'Social Links', icon: LinkIcon },
@@ -381,12 +394,6 @@ export default function Admin() {
     { id: 'maps', label: 'Google Maps', icon: MapPin }
   ]
 
-  // Handle page tab switching - set default to home when pages tab is clicked
-  useEffect(() => {
-    if (activeTab === 'pages') {
-      setActiveTab('pages-home')
-    }
-  }, [activeTab])
 
   return (
     <div className="min-h-screen bg-gray-50">
