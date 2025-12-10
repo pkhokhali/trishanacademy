@@ -136,7 +136,23 @@ export default function Admin() {
       })
       const data = await response.json()
       if (data) {
-        if (data.content) setContent(data.content)
+        if (data.content) {
+          setContent(data.content)
+          // Sync content.heroTitle/heroSubtitle to pageContent.home.hero if they exist
+          if (data.content.heroTitle || data.content.heroSubtitle) {
+            setPageContent(prev => ({
+              ...prev,
+              home: {
+                ...prev.home,
+                hero: {
+                  ...prev.home.hero,
+                  title: data.content.heroTitle || prev.home.hero?.title || '',
+                  subtitle: data.content.heroSubtitle || prev.home.hero?.subtitle || ''
+                }
+              }
+            }))
+          }
+        }
         if (data.navigation) setNavigation(data.navigation)
         if (data.socialLinks) setSocialLinks(data.socialLinks)
         if (data.images) setImages(data.images)
