@@ -32,7 +32,19 @@ const Login = () => {
         navigate('/admin')
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Invalid credentials. Please try again.')
+      console.error('Login error:', err)
+      
+      if (err.code === 'ECONNREFUSED' || err.message === 'Network Error') {
+        setError('Cannot connect to server. Please make sure the backend server is running on port 5000.')
+      } else if (err.response) {
+        // Server responded with error
+        setError(err.response.data?.message || 'Invalid credentials. Please try again.')
+      } else if (err.request) {
+        // Request made but no response
+        setError('No response from server. Please check if the backend is running.')
+      } else {
+        setError('An error occurred. Please try again.')
+      }
     } finally {
       setLoading(false)
     }

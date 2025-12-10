@@ -23,6 +23,11 @@ app.use(express.urlencoded({ extended: true }))
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Server is running' })
+})
+
 // API Routes
 app.use('/api/auth', authRoutes)
 app.use('/api/admin', adminRoutes)
@@ -51,7 +56,17 @@ mongoose.connect(MONGODB_URI)
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+// Start server only after MongoDB connection is established
+mongoose.connection.once('open', () => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+    console.log(`API available at http://localhost:${PORT}/api`)
+  })
+})
+
+// Handle MongoDB connection errors
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err)
+  console.log('Server will not start until MongoDB is connected')
 })
 
