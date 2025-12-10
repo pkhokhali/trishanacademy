@@ -35,7 +35,71 @@ const settingsSchema = new mongoose.Schema({
     description: String,
     category: String,
     image: String
-  }]
+  }],
+  pageContent: {
+    home: {
+      heroTitle: String,
+      heroSubtitle: String,
+      features: [{
+        title: String,
+        description: String
+      }],
+      stats: [{
+        number: String,
+        label: String
+      }],
+      programs: [{
+        title: String,
+        description: String
+      }],
+      testimonials: [{
+        name: String,
+        role: String,
+        text: String
+      }]
+    },
+    about: {
+      heroTitle: String,
+      heroSubtitle: String,
+      mission: String,
+      vision: String,
+      history: String,
+      values: [{
+        title: String,
+        description: String
+      }],
+      achievements: [{
+        number: String,
+        label: String
+      }]
+    },
+    programs: {
+      heroTitle: String,
+      heroSubtitle: String,
+      academicPrograms: [{
+        title: String,
+        grade: String,
+        description: String,
+        features: [String]
+      }],
+      extracurricularPrograms: [{
+        title: String,
+        description: String
+      }]
+    },
+    contact: {
+      heroTitle: String,
+      heroSubtitle: String,
+      address: String,
+      phone: String,
+      email: String,
+      officeHours: String
+    },
+    gallery: {
+      heroTitle: String,
+      heroSubtitle: String
+    }
+  }
 }, {
   timestamps: true
 })

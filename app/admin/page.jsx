@@ -20,8 +20,13 @@ import {
   X,
   Camera,
   Plus,
-  Trash2
+  Trash2,
+  FileText,
+  BookOpen,
+  Mail,
+  Users
 } from 'lucide-react'
+import RichTextEditor from '@/components/RichTextEditor'
 
 export default function Admin() {
   const router = useRouter()
@@ -74,6 +79,45 @@ export default function Admin() {
   // Gallery State
   const [gallery, setGallery] = useState([])
 
+  // Page Content State
+  const [pageContent, setPageContent] = useState({
+    home: {
+      heroTitle: '',
+      heroSubtitle: '',
+      features: [],
+      stats: [],
+      programs: [],
+      testimonials: []
+    },
+    about: {
+      heroTitle: '',
+      heroSubtitle: '',
+      mission: '',
+      vision: '',
+      history: '',
+      values: [],
+      achievements: []
+    },
+    programs: {
+      heroTitle: '',
+      heroSubtitle: '',
+      academicPrograms: [],
+      extracurricularPrograms: []
+    },
+    contact: {
+      heroTitle: '',
+      heroSubtitle: '',
+      address: '',
+      phone: '',
+      email: '',
+      officeHours: ''
+    },
+    gallery: {
+      heroTitle: '',
+      heroSubtitle: ''
+    }
+  })
+
   useEffect(() => {
     // Check authentication
     const token = localStorage.getItem('adminToken')
@@ -100,6 +144,7 @@ export default function Admin() {
         if (data.images) setImages(data.images)
         if (data.googleMaps) setGoogleMaps(data.googleMaps)
         if (data.gallery) setGallery(data.gallery)
+        if (data.pageContent) setPageContent(data.pageContent)
       }
     } catch (error) {
       console.error('Error loading data:', error)
@@ -129,7 +174,8 @@ export default function Admin() {
           socialLinks,
           images,
           googleMaps,
-          gallery
+          gallery,
+          pageContent
         })
       })
 
@@ -232,14 +278,24 @@ export default function Admin() {
     }
   }
 
+  const [activePageTab, setActivePageTab] = useState('home')
+
   const tabs = [
-    { id: 'content', label: 'Content', icon: Home },
+    { id: 'content', label: 'General', icon: Settings },
+    { id: 'pages', label: 'Pages', icon: FileText },
     { id: 'navigation', label: 'Navigation', icon: Navigation },
     { id: 'gallery', label: 'Gallery', icon: Camera },
     { id: 'social', label: 'Social Links', icon: LinkIcon },
     { id: 'images', label: 'Images', icon: Image },
     { id: 'maps', label: 'Google Maps', icon: MapPin }
   ]
+
+  // Handle page tab switching - set default to home when pages tab is clicked
+  useEffect(() => {
+    if (activeTab === 'pages') {
+      setActiveTab('pages-home')
+    }
+  }, [activeTab])
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -300,6 +356,252 @@ export default function Admin() {
             </nav>
           </div>
         </div>
+
+        {/* Pages Tab */}
+        {(activeTab === 'pages' || activeTab.startsWith('pages-')) && (
+          <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
+            <h2 className="text-xl font-bold text-gray-900 mb-6">Page Content Management</h2>
+            
+            <div className="border-b border-gray-200 mb-6">
+              <nav className="flex space-x-4">
+                {['home', 'about', 'programs', 'contact', 'gallery'].map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setActiveTab(`pages-${page}`)}
+                    className={`px-4 py-2 text-sm font-medium border-b-2 ${
+                      activeTab === `pages-${page}` || (activeTab === 'pages' && page === 'home')
+                        ? 'border-primary-600 text-primary-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                    }`}
+                  >
+                    {page.charAt(0).toUpperCase() + page.slice(1)}
+                  </button>
+                ))}
+              </nav>
+            </div>
+
+            {/* Home Page Content */}
+            {(activeTab === 'pages' || activeTab === 'pages-home') && (
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
+                  <input
+                    type="text"
+                    value={pageContent.home?.heroTitle || ''}
+                    onChange={(e) => setPageContent({
+                      ...pageContent,
+                      home: { ...pageContent.home, heroTitle: e.target.value }
+                    })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
+                  <RichTextEditor
+                    value={pageContent.home?.heroSubtitle || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      home: { ...pageContent.home, heroSubtitle: value }
+                    })}
+                    placeholder="Enter hero subtitle..."
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* About Page Content */}
+            {activeTab === 'pages-about' && (
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
+                  <input
+                    type="text"
+                    value={pageContent.about?.heroTitle || ''}
+                    onChange={(e) => setPageContent({
+                      ...pageContent,
+                      about: { ...pageContent.about, heroTitle: e.target.value }
+                    })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
+                  <RichTextEditor
+                    value={pageContent.about?.heroSubtitle || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      about: { ...pageContent.about, heroSubtitle: value }
+                    })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Mission</label>
+                  <RichTextEditor
+                    value={pageContent.about?.mission || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      about: { ...pageContent.about, mission: value }
+                    })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Vision</label>
+                  <RichTextEditor
+                    value={pageContent.about?.vision || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      about: { ...pageContent.about, vision: value }
+                    })}
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">History</label>
+                  <RichTextEditor
+                    value={pageContent.about?.history || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      about: { ...pageContent.about, history: value }
+                    })}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Programs Page Content */}
+            {activeTab === 'pages-programs' && (
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
+                  <input
+                    type="text"
+                    value={pageContent.programs?.heroTitle || ''}
+                    onChange={(e) => setPageContent({
+                      ...pageContent,
+                      programs: { ...pageContent.programs, heroTitle: e.target.value }
+                    })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
+                  <RichTextEditor
+                    value={pageContent.programs?.heroSubtitle || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      programs: { ...pageContent.programs, heroSubtitle: value }
+                    })}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Contact Page Content */}
+            {activeTab === 'pages-contact' && (
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
+                  <input
+                    type="text"
+                    value={pageContent.contact?.heroTitle || ''}
+                    onChange={(e) => setPageContent({
+                      ...pageContent,
+                      contact: { ...pageContent.contact, heroTitle: e.target.value }
+                    })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
+                  <RichTextEditor
+                    value={pageContent.contact?.heroSubtitle || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      contact: { ...pageContent.contact, heroSubtitle: value }
+                    })}
+                  />
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Address</label>
+                    <input
+                      type="text"
+                      value={pageContent.contact?.address || ''}
+                      onChange={(e) => setPageContent({
+                        ...pageContent,
+                        contact: { ...pageContent.contact, address: e.target.value }
+                      })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
+                    <input
+                      type="text"
+                      value={pageContent.contact?.phone || ''}
+                      onChange={(e) => setPageContent({
+                        ...pageContent,
+                        contact: { ...pageContent.contact, phone: e.target.value }
+                      })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                    <input
+                      type="email"
+                      value={pageContent.contact?.email || ''}
+                      onChange={(e) => setPageContent({
+                        ...pageContent,
+                        contact: { ...pageContent.contact, email: e.target.value }
+                      })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Office Hours</label>
+                    <input
+                      type="text"
+                      value={pageContent.contact?.officeHours || ''}
+                      onChange={(e) => setPageContent({
+                        ...pageContent,
+                        contact: { ...pageContent.contact, officeHours: e.target.value }
+                      })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Gallery Page Content */}
+            {activeTab === 'pages-gallery' && (
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
+                  <input
+                    type="text"
+                    value={pageContent.gallery?.heroTitle || ''}
+                    onChange={(e) => setPageContent({
+                      ...pageContent,
+                      gallery: { ...pageContent.gallery, heroTitle: e.target.value }
+                    })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
+                  <RichTextEditor
+                    value={pageContent.gallery?.heroSubtitle || ''}
+                    onChange={(value) => setPageContent({
+                      ...pageContent,
+                      gallery: { ...pageContent.gallery, heroSubtitle: value }
+                    })}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Content Tab */}
         {activeTab === 'content' && (
