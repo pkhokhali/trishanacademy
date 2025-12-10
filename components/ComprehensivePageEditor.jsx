@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import NextImage from 'next/image'
-import { Upload, X, Plus, Trash2, Palette, Image as ImageIcon, ChevronDown, ChevronUp } from 'lucide-react'
+import { Upload, X, Plus, Trash2, Palette, Image as ImageIcon, ChevronDown, ChevronUp, Edit2, Check, X as XIcon } from 'lucide-react'
 import RichTextEditor from './RichTextEditor'
 
 export default function ComprehensivePageEditor({ 
@@ -12,11 +12,23 @@ export default function ComprehensivePageEditor({
   onImageUpload
 }) {
   const [expandedSections, setExpandedSections] = useState({})
+  const [editingFields, setEditingFields] = useState({}) // Track which fields are being edited
   
   // Debug: Log received data
   useEffect(() => {
     console.log(`Page Editor for ${pageName} received data:`, pageData)
   }, [pageName, pageData])
+  
+  const isEditing = (sectionKey, fieldKey) => {
+    return editingFields[`${sectionKey}-${fieldKey}`] === true
+  }
+  
+  const setEditing = (sectionKey, fieldKey, value) => {
+    setEditingFields(prev => ({
+      ...prev,
+      [`${sectionKey}-${fieldKey}`]: value
+    }))
+  }
 
   const toggleSection = (sectionKey) => {
     setExpandedSections(prev => ({
@@ -183,30 +195,118 @@ export default function ComprehensivePageEditor({
             {/* Dynamic Fields */}
             {fields.map(field => {
               if (field.type === 'text') {
+                const currentValue = section[field.key] || ''
+                const editing = isEditing(sectionKey, field.key)
+                
                 return (
-                  <div key={field.key}>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      {field.label}
-                    </label>
-                    <input
-                      type="text"
-                      value={section[field.key] || ''}
-                      onChange={(e) => updateSection(sectionKey, field.key, e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                    />
+                  <div key={field.key} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        {field.label}
+                      </label>
+                      {!editing ? (
+                        <button
+                          onClick={() => setEditing(sectionKey, field.key, true)}
+                          className="flex items-center space-x-1 px-3 py-1 text-sm bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                        >
+                          <Edit2 className="h-4 w-4" />
+                          <span>Edit</span>
+                        </button>
+                      ) : (
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => setEditing(sectionKey, field.key, false)}
+                            className="flex items-center space-x-1 px-3 py-1 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                          >
+                            <Check className="h-4 w-4" />
+                            <span>Save</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setEditing(sectionKey, field.key, false)
+                              // Reset to original value if needed
+                            }}
+                            className="flex items-center space-x-1 px-3 py-1 text-sm bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                          >
+                            <XIcon className="h-4 w-4" />
+                            <span>Cancel</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    {!editing ? (
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 min-h-[40px]">
+                        <p className="text-gray-700 whitespace-pre-wrap">
+                          {currentValue || <span className="text-gray-400 italic">No content set</span>}
+                        </p>
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        value={currentValue}
+                        onChange={(e) => updateSection(sectionKey, field.key, e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
+                        placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+                        autoFocus
+                      />
+                    )}
                   </div>
                 )
               } else if (field.type === 'richtext') {
+                const currentValue = section[field.key] || ''
+                const editing = isEditing(sectionKey, field.key)
+                
                 return (
-                  <div key={field.key}>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      {field.label}
-                    </label>
-                    <RichTextEditor
-                      value={section[field.key] || ''}
-                      onChange={(value) => updateSection(sectionKey, field.key, value)}
-                      placeholder={field.placeholder}
-                    />
+                  <div key={field.key} className="border border-gray-200 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-semibold text-gray-700">
+                        {field.label}
+                      </label>
+                      {!editing ? (
+                        <button
+                          onClick={() => setEditing(sectionKey, field.key, true)}
+                          className="flex items-center space-x-1 px-3 py-1 text-sm bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                        >
+                          <Edit2 className="h-4 w-4" />
+                          <span>Edit</span>
+                        </button>
+                      ) : (
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => setEditing(sectionKey, field.key, false)}
+                            className="flex items-center space-x-1 px-3 py-1 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                          >
+                            <Check className="h-4 w-4" />
+                            <span>Save</span>
+                          </button>
+                          <button
+                            onClick={() => setEditing(sectionKey, field.key, false)}
+                            className="flex items-center space-x-1 px-3 py-1 text-sm bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                          >
+                            <XIcon className="h-4 w-4" />
+                            <span>Cancel</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    {!editing ? (
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 min-h-[100px]">
+                        {currentValue ? (
+                          <div 
+                            className="text-gray-700 prose prose-sm max-w-none"
+                            dangerouslySetInnerHTML={{ __html: currentValue }}
+                          />
+                        ) : (
+                          <p className="text-gray-400 italic">No content set</p>
+                        )}
+                      </div>
+                    ) : (
+                      <RichTextEditor
+                        value={currentValue}
+                        onChange={(value) => updateSection(sectionKey, field.key, value)}
+                        placeholder={field.placeholder || `Enter ${field.label.toLowerCase()}`}
+                      />
+                    )}
                   </div>
                 )
               } else if (field.type === 'items') {
