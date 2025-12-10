@@ -53,7 +53,16 @@ export async function POST(request) {
     if (body.images) settings.images = { ...settings.images, ...body.images }
     if (body.googleMaps) settings.googleMaps = body.googleMaps
     if (body.gallery) settings.gallery = body.gallery
-    if (body.pageContent) settings.pageContent = body.pageContent
+    if (body.pageContent) {
+      // Merge page content instead of replacing
+      if (!settings.pageContent) settings.pageContent = {}
+      Object.keys(body.pageContent).forEach(pageName => {
+        settings.pageContent[pageName] = {
+          ...settings.pageContent[pageName],
+          ...body.pageContent[pageName]
+        }
+      })
+    }
 
     await settings.save()
     return NextResponse.json({ message: 'Settings updated successfully', settings })

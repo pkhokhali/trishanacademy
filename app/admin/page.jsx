@@ -28,6 +28,7 @@ import {
 } from 'lucide-react'
 import RichTextEditor from '@/components/RichTextEditor'
 import ComprehensivePageEditor from '@/components/ComprehensivePageEditor'
+import PageContentEditor from '@/components/PageContentEditor'
 
 export default function Admin() {
   const router = useRouter()
