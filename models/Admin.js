@@ -12,7 +12,8 @@ const adminSchema = new mongoose.Schema({
     required: true
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  bufferCommands: false
 })
 
 // Hash password before saving
