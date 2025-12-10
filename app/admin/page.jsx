@@ -470,49 +470,49 @@ export default function Admin() {
               </nav>
             </div>
 
-            {/* Comprehensive Page Editors */}
+            {/* WordPress-style Page Content Editors */}
             {(activeTab === 'pages' || activeTab === 'pages-home') && (
-              <ComprehensivePageEditor
+              <PageContentEditor
                 pageName="home"
-                pageData={pageContent.home || {}}
-                onUpdate={(updated) => setPageContent({ ...pageContent, home: updated })}
-                onImageUpload={handlePageImageUpload}
+                onSave={() => {
+                  loadData() // Reload data after save
+                }}
               />
             )}
 
             {activeTab === 'pages-about' && (
-              <ComprehensivePageEditor
+              <PageContentEditor
                 pageName="about"
-                pageData={pageContent.about || {}}
-                onUpdate={(updated) => setPageContent({ ...pageContent, about: updated })}
-                onImageUpload={handlePageImageUpload}
+                onSave={() => {
+                  loadData()
+                }}
               />
             )}
 
             {activeTab === 'pages-programs' && (
-              <ComprehensivePageEditor
+              <PageContentEditor
                 pageName="programs"
-                pageData={pageContent.programs || {}}
-                onUpdate={(updated) => setPageContent({ ...pageContent, programs: updated })}
-                onImageUpload={handlePageImageUpload}
+                onSave={() => {
+                  loadData()
+                }}
               />
             )}
 
             {activeTab === 'pages-contact' && (
-              <ComprehensivePageEditor
+              <PageContentEditor
                 pageName="contact"
-                pageData={pageContent.contact || {}}
-                onUpdate={(updated) => setPageContent({ ...pageContent, contact: updated })}
-                onImageUpload={handlePageImageUpload}
+                onSave={() => {
+                  loadData()
+                }}
               />
             )}
 
             {activeTab === 'pages-gallery' && (
-              <ComprehensivePageEditor
+              <PageContentEditor
                 pageName="gallery"
-                pageData={pageContent.gallery || {}}
-                onUpdate={(updated) => setPageContent({ ...pageContent, gallery: updated })}
-                onImageUpload={handlePageImageUpload}
+                onSave={() => {
+                  loadData()
+                }}
               />
             )}
           </div>
