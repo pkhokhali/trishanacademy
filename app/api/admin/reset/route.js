@@ -5,7 +5,9 @@ import Admin from '@/models/Admin'
 
 export async function POST(request) {
   try {
-    await connectDB()
+    const connection = await connectDB()
+    const dbName = connection.connection.db.databaseName
+    console.log(`🔑 Resetting password in database: ${dbName}`)
     
     const { username = 'admin', password = 'admin123' } = await request.json()
 
@@ -28,7 +30,9 @@ export async function POST(request) {
 
     return NextResponse.json({
       message: 'Admin password reset successfully',
-      username: existingAdmin.username
+      username: existingAdmin.username,
+      database: dbName,
+      collection: 'admins'
     })
   } catch (error) {
     console.error('Reset password error:', error)
