@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import NextImage from 'next/image'
 import { Camera, Image as ImageIcon, Video, Users, BookOpen, GraduationCap, Sparkles, Filter } from 'lucide-react'
 
 export default function Gallery() {
@@ -10,6 +11,7 @@ export default function Gallery() {
   useEffect(() => {
     // Load gallery items from API
     loadGalleryItems()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const loadGalleryItems = async () => {
@@ -119,10 +121,12 @@ export default function Gallery() {
                   {/* Image Container */}
                   <div className="relative h-64 bg-gradient-to-br from-primary-100 to-primary-200 overflow-hidden">
                     {item.image && item.image.startsWith('/') ? (
-                      <img
+                      <NextImage
                         src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        alt={item.title || 'Gallery image'}
+                        fill
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        unoptimized
                         onError={(e) => {
                           e.target.style.display = 'none'
                         }}

@@ -127,6 +127,7 @@ export default function Admin() {
 
     // Load existing data
     loadData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
 
   const loadData = async () => {

@@ -14,6 +14,7 @@ export default function PageContentEditor({ pageName, onSave }) {
 
   useEffect(() => {
     loadPageContent()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageName])
 
   const loadPageContent = async () => {
@@ -383,7 +384,7 @@ export default function PageContentEditor({ pageName, onSave }) {
         {editing && renderEditForm()}
         {!previewMode && !editing && (
           <div className="text-center py-12 text-gray-500">
-            Preview is hidden. Click "Show Preview" to view current content.
+            Preview is hidden. Click &quot;Show Preview&quot; to view current content.
           </div>
         )}
       </div>
