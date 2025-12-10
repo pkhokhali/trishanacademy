@@ -5,7 +5,9 @@ import Admin from '@/models/Admin'
 
 export async function POST(request) {
   try {
-    await connectDB()
+    const connection = await connectDB()
+    const dbName = connection.connection.db.databaseName
+    console.log(`📝 Creating admin in database: ${dbName}`)
     
     const { username = 'admin', password = 'admin123' } = await request.json()
 
@@ -30,7 +32,9 @@ export async function POST(request) {
 
     return NextResponse.json({
       message: 'Admin user created successfully',
-      username: admin.username
+      username: admin.username,
+      database: dbName,
+      collection: 'admins'
     })
   } catch (error) {
     console.error('Setup error:', error)

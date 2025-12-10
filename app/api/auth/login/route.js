@@ -6,7 +6,9 @@ import Admin from '@/models/Admin'
 
 export async function POST(request) {
   try {
-    await connectDB()
+    const connection = await connectDB()
+    const dbName = connection.connection.db.databaseName
+    console.log(`🔐 Login attempt from database: ${dbName}`)
     
     const { username, password } = await request.json()
 
