@@ -56,6 +56,7 @@ export default function Home() {
       }
       
       console.log('Homepage loaded data:', homePageContent)
+      console.log('Hero data:', homePageContent.hero)
       setPageData(homePageContent)
     } catch (error) {
       console.error('Error loading page content:', error)
@@ -66,6 +67,13 @@ export default function Home() {
 
   // Default content if not loaded or not set
   const hero = pageData?.hero || {}
+  
+  // Debug logging
+  if (typeof window !== 'undefined') {
+    console.log('Current hero object:', hero)
+    console.log('Hero title:', hero.title)
+    console.log('Hero subtitle:', hero.subtitle)
+  }
   const statsData = pageData?.stats || {}
   const featuresData = pageData?.features || {}
   const programsData = pageData?.programs || {}
