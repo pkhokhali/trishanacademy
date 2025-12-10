@@ -17,7 +17,10 @@ import {
   Youtube,
   Linkedin,
   Upload,
-  X
+  X,
+  Camera,
+  Plus,
+  Trash2
 } from 'lucide-react'
 
 export default function Admin() {
@@ -68,6 +71,9 @@ export default function Admin() {
     address: ''
   })
 
+  // Gallery State
+  const [gallery, setGallery] = useState([])
+
   useEffect(() => {
     // Check authentication
     const token = localStorage.getItem('adminToken')
@@ -93,6 +99,7 @@ export default function Admin() {
         if (data.socialLinks) setSocialLinks(data.socialLinks)
         if (data.images) setImages(data.images)
         if (data.googleMaps) setGoogleMaps(data.googleMaps)
+        if (data.gallery) setGallery(data.gallery)
       }
     } catch (error) {
       console.error('Error loading data:', error)
@@ -121,7 +128,8 @@ export default function Admin() {
           navigation,
           socialLinks,
           images,
-          googleMaps
+          googleMaps,
+          gallery
         })
       })
 
@@ -180,9 +188,54 @@ export default function Admin() {
     setNavigation(updated)
   }
 
+  const addGalleryItem = () => {
+    setGallery([...gallery, { title: '', description: '', category: 'events', image: '' }])
+  }
+
+  const removeGalleryItem = (index) => {
+    setGallery(gallery.filter((_, i) => i !== index))
+  }
+
+  const updateGalleryItem = (index, field, value) => {
+    const updated = [...gallery]
+    updated[index][field] = value
+    setGallery(updated)
+  }
+
+  const handleGalleryImageUpload = async (e, index) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    const formData = new FormData()
+    formData.append('image', file)
+    formData.append('type', 'gallery')
+
+    try {
+      const token = localStorage.getItem('adminToken')
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+      })
+      const data = await response.json()
+      if (response.ok) {
+        const updated = [...gallery]
+        updated[index].image = data.url
+        setGallery(updated)
+        setMessage({ type: 'success', text: 'Gallery image uploaded successfully!' })
+        setTimeout(() => setMessage({ type: '', text: '' }), 3000)
+      } else {
+        setMessage({ type: 'error', text: 'Failed to upload image. Please try again.' })
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Failed to upload image. Please try again.' })
+    }
+  }
+
   const tabs = [
     { id: 'content', label: 'Content', icon: Home },
     { id: 'navigation', label: 'Navigation', icon: Navigation },
+    { id: 'gallery', label: 'Gallery', icon: Camera },
     { id: 'social', label: 'Social Links', icon: LinkIcon },
     { id: 'images', label: 'Images', icon: Image },
     { id: 'maps', label: 'Google Maps', icon: MapPin }
@@ -383,6 +436,120 @@ export default function Admin() {
                   </button>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Gallery Tab */}
+        {activeTab === 'gallery' && (
+          <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-gray-900">Gallery Management</h2>
+              <button
+                onClick={addGalleryItem}
+                className="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              >
+                <Plus className="h-5 w-5" />
+                <span>Add Gallery Item</span>
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {gallery.map((item, index) => (
+                <div key={index} className="border border-gray-200 rounded-lg p-6 space-y-4">
+                  <div className="flex items-start justify-between">
+                    <h3 className="text-lg font-semibold text-gray-900">Item {index + 1}</h3>
+                    <button
+                      onClick={() => removeGalleryItem(index)}
+                      className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </button>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                      <input
+                        type="text"
+                        value={item.title || ''}
+                        onChange={(e) => updateGalleryItem(index, 'title', e.target.value)}
+                        placeholder="Annual Science Fair"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                      <select
+                        value={item.category || 'events'}
+                        onChange={(e) => updateGalleryItem(index, 'category', e.target.value)}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      >
+                        <option value="events">Events</option>
+                        <option value="activities">Activities</option>
+                        <option value="classroom">Classroom</option>
+                      </select>
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                      <textarea
+                        value={item.description || ''}
+                        onChange={(e) => updateGalleryItem(index, 'description', e.target.value)}
+                        rows="3"
+                        placeholder="Students showcasing innovative projects"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">Image</label>
+                      <div className="flex items-center space-x-4">
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleGalleryImageUpload(e, index)}
+                          className="hidden"
+                          id={`gallery-upload-${index}`}
+                        />
+                        <label
+                          htmlFor={`gallery-upload-${index}`}
+                          className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors cursor-pointer flex items-center space-x-2"
+                        >
+                          <Upload className="h-5 w-5" />
+                          <span>Upload Image</span>
+                        </label>
+                        {item.image && (
+                          <div className="relative">
+                            <NextImage 
+                              src={item.image} 
+                              alt={item.title || 'Gallery'} 
+                              width={200} 
+                              height={150} 
+                              className="rounded-lg border border-gray-300" 
+                              unoptimized 
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              {gallery.length === 0 && (
+                <div className="text-center py-12 border-2 border-dashed border-gray-300 rounded-lg">
+                  <Camera className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <p className="text-gray-600 mb-4">No gallery items yet. Add your first item!</p>
+                  <button
+                    onClick={addGalleryItem}
+                    className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                  >
+                    Add Gallery Item
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}

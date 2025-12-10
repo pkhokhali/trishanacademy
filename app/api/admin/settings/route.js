@@ -52,6 +52,7 @@ export async function POST(request) {
     if (body.socialLinks) settings.socialLinks = body.socialLinks
     if (body.images) settings.images = { ...settings.images, ...body.images }
     if (body.googleMaps) settings.googleMaps = body.googleMaps
+    if (body.gallery) settings.gallery = body.gallery
 
     await settings.save()
     return NextResponse.json({ message: 'Settings updated successfully', settings })

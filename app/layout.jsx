@@ -1,6 +1,5 @@
 import './globals.css'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+import ConditionalLayout from './ConditionalLayout'
 
 export const metadata = {
   title: 'Trishan Academy - Empowering Future Leaders',
@@ -11,15 +10,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   )
 }
-

@@ -29,7 +29,13 @@ const settingsSchema = new mongoose.Schema({
   googleMaps: {
     embedUrl: String,
     address: String
-  }
+  },
+  gallery: [{
+    title: String,
+    description: String,
+    category: String,
+    image: String
+  }]
 }, {
   timestamps: true
 })
