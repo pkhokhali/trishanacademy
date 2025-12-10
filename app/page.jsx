@@ -40,19 +40,16 @@ export default function Home() {
       const generalContent = settings.content || {}
       
       // Prioritize pageContent.home.hero, but fallback to content if needed
-      if (homePageContent.hero) {
-        // Use pageContent.home.hero (this is the primary source)
-        homePageContent.hero = {
-          ...homePageContent.hero,
-          title: homePageContent.hero.title || generalContent.heroTitle || '',
-          subtitle: homePageContent.hero.subtitle || generalContent.heroSubtitle || ''
-        }
-      } else if (generalContent.heroTitle) {
-        // Fallback to content object if pageContent.home.hero doesn't exist
-        homePageContent.hero = {
-          title: generalContent.heroTitle,
-          subtitle: generalContent.heroSubtitle || ''
-        }
+      // Always ensure hero object exists
+      if (!homePageContent.hero) {
+        homePageContent.hero = {}
+      }
+      
+      // Use pageContent.home.hero as primary source, fallback to content
+      homePageContent.hero = {
+        ...homePageContent.hero,
+        title: homePageContent.hero.title || generalContent.heroTitle || '',
+        subtitle: homePageContent.hero.subtitle || generalContent.heroSubtitle || ''
       }
       
       console.log('Homepage loaded data:', homePageContent)
