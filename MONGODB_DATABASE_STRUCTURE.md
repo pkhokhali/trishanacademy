@@ -6,39 +6,24 @@ Based on your MongoDB Atlas cluster:
 
 ### Cluster Information
 - **Cluster Name:** `pkhokhali`
-- **Current Database:** `test`
+- **Database Name:** `pkhokhali`
 - **Collection:** `admins`
 
 ---
 
 ## Required Database Structure
 
-### Option 1: Use Existing `test` Database (Current)
+### Current Database: `pkhokhali`
 
-If you want to use the existing `test` database, your connection string should be:
+Your connection string should be:
 
 ```
-mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/test?retryWrites=true&w=majority
-```
-
-**Collections needed:**
-- `admins` - Admin users (username, password)
-- `settings` - Website settings (content, navigation, social links, images, maps)
-
----
-
-### Option 2: Create New Database `trishan-academy` (Recommended)
-
-For better organization, create a dedicated database:
-
-**Connection String:**
-```
-mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority
+mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/pkhokhali?retryWrites=true&w=majority
 ```
 
 **Collections:**
-- `admins` - Admin users
-- `settings` - Website settings
+- `admins` - Admin users (username, password)
+- `settings` - Website settings (content, navigation, social links, images, maps)
 
 ---
 
@@ -170,14 +155,9 @@ fetch('https://trishanacademy.edu.np/api/admin/reset', {
 
 1. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
 2. Update `MONGODB_URI`:
-   - If using `test` database:
-     ```
-     mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/test?retryWrites=true&w=majority
-     ```
-   - If using `trishan-academy` database:
-     ```
-     mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority
-     ```
+   ```
+   mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/pkhokhali?retryWrites=true&w=majority
+   ```
 3. Redeploy the application
 
 ---
@@ -206,15 +186,13 @@ fetch('https://trishanacademy.edu.np/api/admin/reset', {
 
 ---
 
-## Recommended Structure
+## Current Database Structure
 
-For production, I recommend:
-
-**Database:** `trishan-academy` (or your preferred name)
+**Database:** `pkhokhali`
 
 **Collections:**
 - `admins` - Admin authentication
 - `settings` - Website content and configuration
 
-This keeps your data organized and separate from test databases.
+This is your production database structure.
 

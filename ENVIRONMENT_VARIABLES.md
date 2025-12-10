@@ -14,11 +14,11 @@ mongodb+srv://username:password@cluster.mongodb.net/database-name?retryWrites=tr
 
 **Your MongoDB Atlas Connection String:**
 ```
-mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority
+mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/pkhokhali?retryWrites=true&w=majority
 ```
 
 **Important Notes:**
-- Replace `trishan-academy` with your desired database name
+- Database name: `pkhokhali`
 - Make sure your MongoDB Atlas IP whitelist includes `0.0.0.0/0` (all IPs) for Vercel deployment
 - The connection string should include the database name before the `?`
 
@@ -63,7 +63,7 @@ openssl rand -hex 32
 Create a `.env.local` file in the root directory:
 
 ```env
-MONGODB_URI=mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/pkhokhali?retryWrites=true&w=majority
 JWT_SECRET=THIS_is_my_school_project
 ```
 
@@ -85,7 +85,7 @@ JWT_SECRET=THIS_is_my_school_project
    
    **Variable 1:**
    - **Name:** `MONGODB_URI`
-   - **Value:** `mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority`
+   - **Value:** `mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/pkhokhali?retryWrites=true&w=majority`
    - **Environment:** Select all (Production, Preview, Development)
 
    **Variable 2:**
@@ -105,7 +105,7 @@ JWT_SECRET=THIS_is_my_school_project
 ### Required Variables:
 | Variable | Description | Value |
 |----------|-------------|-------|
-| `MONGODB_URI` | MongoDB connection string | `mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/trishan-academy?retryWrites=true&w=majority` |
+| `MONGODB_URI` | MongoDB connection string | `mongodb+srv://Vercel-Admin-pkhokhali:ciRg6aLDUjm3b8uu@pkhokhali.iaciobg.mongodb.net/pkhokhali?retryWrites=true&w=majority` |
 | `JWT_SECRET` | Secret for JWT token signing | `THIS_is_my_school_project` |
 
 ### Optional Variables:
