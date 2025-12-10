@@ -143,25 +143,32 @@ export default function Admin() {
         if (data.googleMaps) setGoogleMaps(data.googleMaps)
         if (data.gallery) setGallery(data.gallery)
         if (data.pageContent) {
-          // Deep merge to preserve nested structure
+          // Deep merge function to preserve nested structure
+          const isObject = (item) => item && typeof item === 'object' && !Array.isArray(item)
+          
           const mergeDeep = (target, source) => {
+            if (!source) return target
             const output = { ...target }
             if (isObject(target) && isObject(source)) {
               Object.keys(source).forEach(key => {
                 if (isObject(source[key])) {
-                  if (!(key in target))
-                    Object.assign(output, { [key]: source[key] })
-                  else
+                  if (!(key in target) || !isObject(target[key])) {
+                    output[key] = { ...source[key] }
+                  } else {
                     output[key] = mergeDeep(target[key], source[key])
+                  }
                 } else {
-                  Object.assign(output, { [key]: source[key] })
+                  output[key] = source[key]
                 }
               })
             }
             return output
           }
-          const isObject = (item) => item && typeof item === 'object' && !Array.isArray(item)
-          setPageContent(mergeDeep(pageContent, data.pageContent))
+          
+          // Merge loaded data with default structure
+          const merged = mergeDeep(pageContent, data.pageContent)
+          setPageContent(merged)
+          console.log('Loaded page content:', merged)
         }
       }
     } catch (error) {

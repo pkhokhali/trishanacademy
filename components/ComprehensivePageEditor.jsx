@@ -12,6 +12,11 @@ export default function ComprehensivePageEditor({
   onImageUpload
 }) {
   const [expandedSections, setExpandedSections] = useState({})
+  
+  // Debug: Log received data
+  useEffect(() => {
+    console.log(`Page Editor for ${pageName} received data:`, pageData)
+  }, [pageName, pageData])
 
   const toggleSection = (sectionKey) => {
     setExpandedSections(prev => ({
