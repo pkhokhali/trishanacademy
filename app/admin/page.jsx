@@ -276,6 +276,35 @@ export default function Admin() {
     }
   }
 
+  const handlePageImageUpload = async (file, identifier) => {
+    if (!file) return null
+
+    const formData = new FormData()
+    formData.append('image', file)
+    formData.append('type', `page-${identifier}`)
+
+    try {
+      const token = localStorage.getItem('adminToken')
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+      })
+      const data = await response.json()
+      if (response.ok) {
+        setMessage({ type: 'success', text: 'Image uploaded successfully!' })
+        setTimeout(() => setMessage({ type: '', text: '' }), 3000)
+        return data.url
+      } else {
+        setMessage({ type: 'error', text: 'Failed to upload image. Please try again.' })
+        return null
+      }
+    } catch (error) {
+      setMessage({ type: 'error', text: 'Failed to upload image. Please try again.' })
+      return null
+    }
+  }
+
   const [activePageTab, setActivePageTab] = useState('home')
 
   const tabs = [

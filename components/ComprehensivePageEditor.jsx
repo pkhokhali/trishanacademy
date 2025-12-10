@@ -24,7 +24,7 @@ export default function ComprehensivePageEditor({
     const updated = {
       ...pageData,
       [sectionKey]: {
-        ...pageData[sectionKey],
+        ...(pageData[sectionKey] || {}),
         [field]: value
       }
     }
@@ -56,9 +56,13 @@ export default function ComprehensivePageEditor({
     const file = e.target.files[0]
     if (!file) return
 
-    const url = await onImageUpload(file, `${pageName}-${sectionKey}-${field}`)
-    if (url) {
-      updateSection(sectionKey, field, url)
+    try {
+      const url = await onImageUpload(file, `${pageName}-${sectionKey}-${field}`)
+      if (url) {
+        updateSection(sectionKey, field, url)
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error)
     }
   }
 
@@ -248,12 +252,17 @@ export default function ComprehensivePageEditor({
                                     <input
                                       type="file"
                                       accept="image/*"
-                                      onChange={(e) => {
+                                      onChange={async (e) => {
                                         const file = e.target.files[0]
                                         if (file) {
-                                          onImageUpload(file, `${pageName}-${sectionKey}-item-${itemIndex}-${itemField.key}`).then(url => {
-                                            if (url) updateSectionItem(sectionKey, itemIndex, itemField.key, url)
-                                          })
+                                          try {
+                                            const url = await onImageUpload(file, `${pageName}-${sectionKey}-item-${itemIndex}-${itemField.key}`)
+                                            if (url) {
+                                              updateSectionItem(sectionKey, itemIndex, itemField.key, url)
+                                            }
+                                          } catch (error) {
+                                            console.error('Error uploading image:', error)
+                                          }
                                         }
                                       }}
                                       className="hidden"
