@@ -38,66 +38,192 @@ const settingsSchema = new mongoose.Schema({
   }],
   pageContent: {
     home: {
-      heroTitle: String,
-      heroSubtitle: String,
-      features: [{
+      hero: {
         title: String,
-        description: String
-      }],
-      stats: [{
-        number: String,
-        label: String
-      }],
-      programs: [{
+        subtitle: String,
+        backgroundImage: String,
+        backgroundColor: String,
+        backgroundGradient: String,
+        badgeText: String
+      },
+      stats: {
+        sectionTitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          number: String,
+          label: String,
+          iconColor: String
+        }]
+      },
+      features: {
+        sectionTitle: String,
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          title: String,
+          description: String,
+          icon: String
+        }]
+      },
+      programs: {
+        sectionTitle: String,
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          title: String,
+          description: String,
+          icon: String
+        }]
+      },
+      testimonials: {
+        sectionTitle: String,
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          name: String,
+          role: String,
+          text: String,
+          initials: String
+        }]
+      },
+      cta: {
         title: String,
-        description: String
-      }],
-      testimonials: [{
-        name: String,
-        role: String,
-        text: String
-      }]
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        buttonText: String
+      }
     },
     about: {
-      heroTitle: String,
-      heroSubtitle: String,
-      mission: String,
-      vision: String,
-      history: String,
-      values: [{
+      hero: {
         title: String,
-        description: String
-      }],
-      achievements: [{
-        number: String,
-        label: String
-      }]
+        subtitle: String,
+        backgroundImage: String,
+        backgroundColor: String,
+        backgroundGradient: String
+      },
+      mission: {
+        title: String,
+        content: String,
+        backgroundColor: String,
+        backgroundImage: String
+      },
+      vision: {
+        title: String,
+        content: String,
+        backgroundColor: String,
+        backgroundImage: String
+      },
+      history: {
+        sectionTitle: String,
+        content: String,
+        backgroundColor: String,
+        backgroundImage: String
+      },
+      values: {
+        sectionTitle: String,
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          title: String,
+          description: String,
+          icon: String
+        }]
+      },
+      achievements: {
+        sectionTitle: String,
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          number: String,
+          label: String
+        }]
+      }
     },
     programs: {
-      heroTitle: String,
-      heroSubtitle: String,
-      academicPrograms: [{
+      hero: {
         title: String,
-        grade: String,
-        description: String,
-        features: [String]
-      }],
-      extracurricularPrograms: [{
-        title: String,
-        description: String
-      }]
+        subtitle: String,
+        backgroundImage: String,
+        backgroundColor: String,
+        backgroundGradient: String
+      },
+      academic: {
+        sectionTitle: String,
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          title: String,
+          grade: String,
+          description: String,
+          features: [String],
+          icon: String
+        }]
+      },
+      extracurricular: {
+        sectionTitle: String,
+        subtitle: String,
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          title: String,
+          description: String,
+          icon: String
+        }]
+      }
     },
     contact: {
-      heroTitle: String,
-      heroSubtitle: String,
-      address: String,
-      phone: String,
-      email: String,
-      officeHours: String
+      hero: {
+        title: String,
+        subtitle: String,
+        backgroundImage: String,
+        backgroundColor: String,
+        backgroundGradient: String
+      },
+      form: {
+        title: String,
+        backgroundColor: String,
+        backgroundImage: String
+      },
+      info: {
+        backgroundColor: String,
+        backgroundImage: String,
+        address: String,
+        phone: String,
+        email: String,
+        officeHours: String
+      },
+      map: {
+        backgroundColor: String,
+        backgroundImage: String
+      }
     },
     gallery: {
-      heroTitle: String,
-      heroSubtitle: String
+      hero: {
+        title: String,
+        subtitle: String,
+        backgroundImage: String,
+        backgroundColor: String,
+        backgroundGradient: String
+      },
+      filter: {
+        backgroundColor: String
+      },
+      stats: {
+        backgroundColor: String,
+        backgroundImage: String,
+        items: [{
+          number: String,
+          label: String
+        }]
+      }
     }
   }
 }, {

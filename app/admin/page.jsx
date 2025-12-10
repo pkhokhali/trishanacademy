@@ -27,6 +27,7 @@ import {
   Users
 } from 'lucide-react'
 import RichTextEditor from '@/components/RichTextEditor'
+import ComprehensivePageEditor from '@/components/ComprehensivePageEditor'
 
 export default function Admin() {
   const router = useRouter()
@@ -79,42 +80,39 @@ export default function Admin() {
   // Gallery State
   const [gallery, setGallery] = useState([])
 
-  // Page Content State
+  // Page Content State - Comprehensive structure
   const [pageContent, setPageContent] = useState({
     home: {
-      heroTitle: '',
-      heroSubtitle: '',
-      features: [],
-      stats: [],
-      programs: [],
-      testimonials: []
+      hero: { title: '', subtitle: '', backgroundImage: '', backgroundColor: '', backgroundGradient: '', badgeText: '' },
+      stats: { sectionTitle: '', backgroundColor: '', backgroundImage: '', items: [] },
+      features: { sectionTitle: '', subtitle: '', backgroundColor: '', backgroundImage: '', items: [] },
+      programs: { sectionTitle: '', subtitle: '', backgroundColor: '', backgroundImage: '', items: [] },
+      testimonials: { sectionTitle: '', subtitle: '', backgroundColor: '', backgroundImage: '', items: [] },
+      cta: { title: '', subtitle: '', backgroundColor: '', backgroundImage: '', buttonText: '' }
     },
     about: {
-      heroTitle: '',
-      heroSubtitle: '',
-      mission: '',
-      vision: '',
-      history: '',
-      values: [],
-      achievements: []
+      hero: { title: '', subtitle: '', backgroundImage: '', backgroundColor: '', backgroundGradient: '' },
+      mission: { title: '', content: '', backgroundColor: '', backgroundImage: '' },
+      vision: { title: '', content: '', backgroundColor: '', backgroundImage: '' },
+      history: { sectionTitle: '', content: '', backgroundColor: '', backgroundImage: '' },
+      values: { sectionTitle: '', subtitle: '', backgroundColor: '', backgroundImage: '', items: [] },
+      achievements: { sectionTitle: '', subtitle: '', backgroundColor: '', backgroundImage: '', items: [] }
     },
     programs: {
-      heroTitle: '',
-      heroSubtitle: '',
-      academicPrograms: [],
-      extracurricularPrograms: []
+      hero: { title: '', subtitle: '', backgroundImage: '', backgroundColor: '', backgroundGradient: '' },
+      academic: { sectionTitle: '', subtitle: '', backgroundColor: '', backgroundImage: '', items: [] },
+      extracurricular: { sectionTitle: '', subtitle: '', backgroundColor: '', backgroundImage: '', items: [] }
     },
     contact: {
-      heroTitle: '',
-      heroSubtitle: '',
-      address: '',
-      phone: '',
-      email: '',
-      officeHours: ''
+      hero: { title: '', subtitle: '', backgroundImage: '', backgroundColor: '', backgroundGradient: '' },
+      form: { title: '', backgroundColor: '', backgroundImage: '' },
+      info: { backgroundColor: '', backgroundImage: '', address: '', phone: '', email: '', officeHours: '' },
+      map: { backgroundColor: '', backgroundImage: '' }
     },
     gallery: {
-      heroTitle: '',
-      heroSubtitle: ''
+      hero: { title: '', subtitle: '', backgroundImage: '', backgroundColor: '', backgroundGradient: '' },
+      filter: { backgroundColor: '' },
+      stats: { backgroundColor: '', backgroundImage: '', items: [] }
     }
   })
 
@@ -380,225 +378,50 @@ export default function Admin() {
               </nav>
             </div>
 
-            {/* Home Page Content */}
+            {/* Comprehensive Page Editors */}
             {(activeTab === 'pages' || activeTab === 'pages-home') && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
-                  <input
-                    type="text"
-                    value={pageContent.home?.heroTitle || ''}
-                    onChange={(e) => setPageContent({
-                      ...pageContent,
-                      home: { ...pageContent.home, heroTitle: e.target.value }
-                    })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
-                  <RichTextEditor
-                    value={pageContent.home?.heroSubtitle || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      home: { ...pageContent.home, heroSubtitle: value }
-                    })}
-                    placeholder="Enter hero subtitle..."
-                  />
-                </div>
-              </div>
+              <ComprehensivePageEditor
+                pageName="home"
+                pageData={pageContent.home || {}}
+                onUpdate={(updated) => setPageContent({ ...pageContent, home: updated })}
+                onImageUpload={handlePageImageUpload}
+              />
             )}
 
-            {/* About Page Content */}
             {activeTab === 'pages-about' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
-                  <input
-                    type="text"
-                    value={pageContent.about?.heroTitle || ''}
-                    onChange={(e) => setPageContent({
-                      ...pageContent,
-                      about: { ...pageContent.about, heroTitle: e.target.value }
-                    })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
-                  <RichTextEditor
-                    value={pageContent.about?.heroSubtitle || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      about: { ...pageContent.about, heroSubtitle: value }
-                    })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Mission</label>
-                  <RichTextEditor
-                    value={pageContent.about?.mission || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      about: { ...pageContent.about, mission: value }
-                    })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Vision</label>
-                  <RichTextEditor
-                    value={pageContent.about?.vision || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      about: { ...pageContent.about, vision: value }
-                    })}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">History</label>
-                  <RichTextEditor
-                    value={pageContent.about?.history || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      about: { ...pageContent.about, history: value }
-                    })}
-                  />
-                </div>
-              </div>
+              <ComprehensivePageEditor
+                pageName="about"
+                pageData={pageContent.about || {}}
+                onUpdate={(updated) => setPageContent({ ...pageContent, about: updated })}
+                onImageUpload={handlePageImageUpload}
+              />
             )}
 
-            {/* Programs Page Content */}
             {activeTab === 'pages-programs' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
-                  <input
-                    type="text"
-                    value={pageContent.programs?.heroTitle || ''}
-                    onChange={(e) => setPageContent({
-                      ...pageContent,
-                      programs: { ...pageContent.programs, heroTitle: e.target.value }
-                    })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
-                  <RichTextEditor
-                    value={pageContent.programs?.heroSubtitle || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      programs: { ...pageContent.programs, heroSubtitle: value }
-                    })}
-                  />
-                </div>
-              </div>
+              <ComprehensivePageEditor
+                pageName="programs"
+                pageData={pageContent.programs || {}}
+                onUpdate={(updated) => setPageContent({ ...pageContent, programs: updated })}
+                onImageUpload={handlePageImageUpload}
+              />
             )}
 
-            {/* Contact Page Content */}
             {activeTab === 'pages-contact' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
-                  <input
-                    type="text"
-                    value={pageContent.contact?.heroTitle || ''}
-                    onChange={(e) => setPageContent({
-                      ...pageContent,
-                      contact: { ...pageContent.contact, heroTitle: e.target.value }
-                    })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
-                  <RichTextEditor
-                    value={pageContent.contact?.heroSubtitle || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      contact: { ...pageContent.contact, heroSubtitle: value }
-                    })}
-                  />
-                </div>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Address</label>
-                    <input
-                      type="text"
-                      value={pageContent.contact?.address || ''}
-                      onChange={(e) => setPageContent({
-                        ...pageContent,
-                        contact: { ...pageContent.contact, address: e.target.value }
-                      })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
-                    <input
-                      type="text"
-                      value={pageContent.contact?.phone || ''}
-                      onChange={(e) => setPageContent({
-                        ...pageContent,
-                        contact: { ...pageContent.contact, phone: e.target.value }
-                      })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                    <input
-                      type="email"
-                      value={pageContent.contact?.email || ''}
-                      onChange={(e) => setPageContent({
-                        ...pageContent,
-                        contact: { ...pageContent.contact, email: e.target.value }
-                      })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Office Hours</label>
-                    <input
-                      type="text"
-                      value={pageContent.contact?.officeHours || ''}
-                      onChange={(e) => setPageContent({
-                        ...pageContent,
-                        contact: { ...pageContent.contact, officeHours: e.target.value }
-                      })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                    />
-                  </div>
-                </div>
-              </div>
+              <ComprehensivePageEditor
+                pageName="contact"
+                pageData={pageContent.contact || {}}
+                onUpdate={(updated) => setPageContent({ ...pageContent, contact: updated })}
+                onImageUpload={handlePageImageUpload}
+              />
             )}
 
-            {/* Gallery Page Content */}
             {activeTab === 'pages-gallery' && (
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Title</label>
-                  <input
-                    type="text"
-                    value={pageContent.gallery?.heroTitle || ''}
-                    onChange={(e) => setPageContent({
-                      ...pageContent,
-                      gallery: { ...pageContent.gallery, heroTitle: e.target.value }
-                    })}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hero Subtitle</label>
-                  <RichTextEditor
-                    value={pageContent.gallery?.heroSubtitle || ''}
-                    onChange={(value) => setPageContent({
-                      ...pageContent,
-                      gallery: { ...pageContent.gallery, heroSubtitle: value }
-                    })}
-                  />
-                </div>
-              </div>
+              <ComprehensivePageEditor
+                pageName="gallery"
+                pageData={pageContent.gallery || {}}
+                onUpdate={(updated) => setPageContent({ ...pageContent, gallery: updated })}
+                onImageUpload={handlePageImageUpload}
+              />
             )}
           </div>
         )}
