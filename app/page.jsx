@@ -74,12 +74,21 @@ export default function Home() {
   // Default content if not loaded or not set
   const hero = pageData?.hero || {}
   
-  // Debug logging
-  if (typeof window !== 'undefined') {
-    console.log('Current hero object:', hero)
-    console.log('Hero title:', hero.title)
-    console.log('Hero subtitle:', hero.subtitle)
-  }
+  // Debug logging - log when pageData changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && pageData) {
+      console.log('=== HOMEPAGE RENDER ===')
+      console.log('pageData:', pageData)
+      console.log('pageData.hero:', pageData.hero)
+      console.log('hero object:', hero)
+      console.log('hero.title:', hero.title)
+      console.log('hero.subtitle:', hero.subtitle)
+      console.log('Will render title?', !!hero.title)
+      console.log('Will render subtitle?', !!hero.subtitle)
+      console.log('=======================')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageData])
   const statsData = pageData?.stats || {}
   const featuresData = pageData?.features || {}
   const programsData = pageData?.programs || {}
