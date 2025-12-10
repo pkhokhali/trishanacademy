@@ -56,10 +56,13 @@ export default function Home() {
         subtitle: heroSubtitle
       }
       
-      console.log('Homepage loaded data:', JSON.stringify(homePageContent, null, 2))
-      console.log('Hero data:', JSON.stringify(homePageContent.hero, null, 2))
-      console.log('Hero title value:', homePageContent.hero?.title)
-      console.log('Hero subtitle value:', homePageContent.hero?.subtitle)
+      console.log('=== HOMEPAGE DATA LOADED ===')
+      console.log('Full homePageContent:', JSON.stringify(homePageContent, null, 2))
+      console.log('Hero object:', JSON.stringify(homePageContent.hero, null, 2))
+      console.log('Hero title:', homePageContent.hero?.title)
+      console.log('Hero subtitle:', homePageContent.hero?.subtitle)
+      console.log('Setting pageData with hero:', homePageContent.hero)
+      console.log('============================')
       setPageData(homePageContent)
     } catch (error) {
       console.error('Error loading page content:', error)
