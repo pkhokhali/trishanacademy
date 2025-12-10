@@ -10,11 +10,19 @@ export async function POST(request) {
     
     const { username, password } = await request.json()
 
+    if (!username || !password) {
+      return NextResponse.json(
+        { message: 'Username and password are required' },
+        { status: 400 }
+      )
+    }
+
     // Find admin user
     const admin = await Admin.findOne({ username })
     if (!admin) {
+      console.log(`Login attempt failed: Admin user '${username}' not found`)
       return NextResponse.json(
-        { message: 'Invalid credentials' },
+        { message: 'Invalid credentials. Admin user does not exist. Please create admin user first using /api/admin/setup' },
         { status: 401 }
       )
     }
@@ -22,8 +30,9 @@ export async function POST(request) {
     // Check password
     const isMatch = await bcrypt.compare(password, admin.password)
     if (!isMatch) {
+      console.log(`Login attempt failed: Incorrect password for user '${username}'`)
       return NextResponse.json(
-        { message: 'Invalid credentials' },
+        { message: 'Invalid credentials. Incorrect password.' },
         { status: 401 }
       )
     }
