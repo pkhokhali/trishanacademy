@@ -27,8 +27,6 @@ import {
   Users
 } from 'lucide-react'
 import RichTextEditor from '@/components/RichTextEditor'
-import ComprehensivePageEditor from '@/components/ComprehensivePageEditor'
-import PageContentEditor from '@/components/PageContentEditor'
 
 export default function Admin() {
   const router = useRouter()
@@ -454,77 +452,6 @@ export default function Admin() {
             </nav>
           </div>
         </div>
-
-        {/* Pages Tab */}
-        {(activeTab === 'pages' || activeTab.startsWith('pages-')) && (
-          <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Page Content Management</h2>
-            
-            <div className="border-b border-gray-200 mb-6">
-              <nav className="flex space-x-4">
-                {['home', 'about', 'programs', 'contact', 'gallery'].map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => setActiveTab(`pages-${page}`)}
-                    className={`px-4 py-2 text-sm font-medium border-b-2 ${
-                      activeTab === `pages-${page}` || (activeTab === 'pages' && page === 'home')
-                        ? 'border-primary-600 text-primary-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700'
-                    }`}
-                  >
-                    {page.charAt(0).toUpperCase() + page.slice(1)}
-                  </button>
-                ))}
-              </nav>
-            </div>
-
-            {/* WordPress-style Page Content Editors */}
-            {(activeTab === 'pages' || activeTab === 'pages-home') && (
-              <PageContentEditor
-                pageName="home"
-                onSave={() => {
-                  loadData() // Reload data after save
-                }}
-              />
-            )}
-
-            {activeTab === 'pages-about' && (
-              <PageContentEditor
-                pageName="about"
-                onSave={() => {
-                  loadData()
-                }}
-              />
-            )}
-
-            {activeTab === 'pages-programs' && (
-              <PageContentEditor
-                pageName="programs"
-                onSave={() => {
-                  loadData()
-                }}
-              />
-            )}
-
-            {activeTab === 'pages-contact' && (
-              <PageContentEditor
-                pageName="contact"
-                onSave={() => {
-                  loadData()
-                }}
-              />
-            )}
-
-            {activeTab === 'pages-gallery' && (
-              <PageContentEditor
-                pageName="gallery"
-                onSave={() => {
-                  loadData()
-                }}
-              />
-            )}
-          </div>
-        )}
 
         {/* Content Tab */}
         {activeTab === 'content' && (
