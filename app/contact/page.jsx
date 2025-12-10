@@ -67,7 +67,7 @@ export default function Contact() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Get In Touch</h1>
           <p className="text-xl text-primary-100 max-w-3xl mx-auto">
-            We'd love to hear from you. Reach out to us for inquiries, enrollment, or any questions.
+            We&apos;d love to hear from you. Reach out to us for inquiries, enrollment, or any questions.
           </p>
         </div>
       </section>
@@ -83,7 +83,7 @@ export default function Contact() {
                 <div className="bg-green-50 border-2 border-green-200 rounded-xl p-8 text-center">
                   <div className="text-green-600 text-5xl mb-4">✓</div>
                   <h3 className="text-2xl font-bold text-green-800 mb-2">Thank You!</h3>
-                  <p className="text-green-700">We've received your message and will get back to you soon.</p>
+                  <p className="text-green-700">We&apos;ve received your message and will get back to you soon.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -178,7 +178,7 @@ export default function Contact() {
             <div>
               <h2 className="text-3xl font-bold mb-6">Contact Information</h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                We're here to help! Reach out to us through any of the following channels, 
+                We&apos;re here to help! Reach out to us through any of the following channels, 
                 and our team will be happy to assist you.
               </p>
               <div className="space-y-6">

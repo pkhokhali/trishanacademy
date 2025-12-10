@@ -9,6 +9,7 @@ const nextConfig = {
         hostname: '**.vercel.app',
       },
     ],
+    unoptimized: false,
   },
   env: {
     MONGODB_URI: process.env.MONGODB_URI,

@@ -289,7 +289,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-white/90 mb-6 leading-relaxed text-lg italic">
-                  "{testimonial.text}"
+                  &ldquo;{testimonial.text}&rdquo;
                 </p>
                 <div className="flex items-center space-x-4 pt-4 border-t border-white/20">
                   <div className="w-14 h-14 bg-gradient-to-br from-white/30 to-white/10 rounded-full flex items-center justify-center font-bold text-lg border-2 border-white/30">

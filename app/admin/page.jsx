@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import NextImage from 'next/image'
 import { 
   Settings, 
   Navigation, 
@@ -475,7 +476,7 @@ export default function Admin() {
                     <span>Upload Logo</span>
                   </label>
                   {images.logo && (
-                    <img src={images.logo} alt="Logo" className="h-16 w-auto" />
+                    <NextImage src={images.logo} alt="Logo" width={64} height={64} className="h-16 w-auto" unoptimized />
                   )}
                 </div>
               </div>
@@ -498,7 +499,7 @@ export default function Admin() {
                     <span>Upload Favicon</span>
                   </label>
                   {images.favicon && (
-                    <img src={images.favicon} alt="Favicon" className="h-8 w-8" />
+                    <NextImage src={images.favicon} alt="Favicon" width={32} height={32} className="h-8 w-8" unoptimized />
                   )}
                 </div>
               </div>
@@ -521,7 +522,7 @@ export default function Admin() {
                     <span>Upload Hero Image</span>
                   </label>
                   {images.heroImage && (
-                    <img src={images.heroImage} alt="Hero" className="h-32 w-auto rounded-lg" />
+                    <NextImage src={images.heroImage} alt="Hero" width={256} height={128} className="h-32 w-auto rounded-lg" unoptimized />
                   )}
                 </div>
               </div>
