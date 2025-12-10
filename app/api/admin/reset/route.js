@@ -21,11 +21,8 @@ export async function POST(request) {
       )
     }
 
-    // Hash new password
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    // Update password
-    existingAdmin.password = hashedPassword
+    // Update password - pre-save hook will hash it automatically
+    existingAdmin.password = password // Pass plain password, model will hash it
     await existingAdmin.save()
 
     return NextResponse.json({

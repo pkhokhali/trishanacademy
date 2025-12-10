@@ -21,13 +21,10 @@ export async function POST(request) {
       )
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    // Create admin
+    // Create admin - password will be hashed by the pre-save hook in Admin model
     const admin = await Admin.create({
       username,
-      password: hashedPassword
+      password: password // Pass plain password, model will hash it
     })
 
     return NextResponse.json({
