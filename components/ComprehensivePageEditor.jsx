@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import NextImage from 'next/image'
 import { Upload, X, Plus, Trash2, Palette, Image as ImageIcon, ChevronDown, ChevronUp } from 'lucide-react'
 import RichTextEditor from './RichTextEditor'
@@ -81,7 +81,14 @@ export default function ComprehensivePageEditor({
           onClick={() => toggleSection(sectionKey)}
           className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors"
         >
-          <h3 className="text-lg font-semibold text-gray-900">{sectionTitle}</h3>
+          <div className="flex items-center space-x-3">
+            <h3 className="text-lg font-semibold text-gray-900">{sectionTitle}</h3>
+            {hasContent && (
+              <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-medium rounded">
+                Has Content
+              </span>
+            )}
+          </div>
           {isExpanded ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </button>
 
