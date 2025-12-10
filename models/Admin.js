@@ -24,19 +24,5 @@ adminSchema.pre('save', async function(next) {
 
 const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema)
 
-// Create default admin if it doesn't exist
-if (typeof window === 'undefined') {
-  Admin.findOne({ username: 'admin' }).then(async (admin) => {
-    if (!admin) {
-      const defaultAdmin = new Admin({
-        username: 'admin',
-        password: 'admin123' // Change this in production!
-      })
-      await defaultAdmin.save()
-      console.log('Default admin created: username: admin, password: admin123')
-    }
-  }).catch(err => console.error('Error creating default admin:', err))
-}
-
 export default Admin
 
