@@ -46,14 +46,20 @@ export default function Home() {
       }
       
       // Use pageContent.home.hero as primary source, fallback to content
+      // IMPORTANT: Use the actual values from pageContent.home.hero first
+      const heroTitle = homePageContent.hero.title || generalContent.heroTitle || ''
+      const heroSubtitle = homePageContent.hero.subtitle || generalContent.heroSubtitle || ''
+      
       homePageContent.hero = {
         ...homePageContent.hero,
-        title: homePageContent.hero.title || generalContent.heroTitle || '',
-        subtitle: homePageContent.hero.subtitle || generalContent.heroSubtitle || ''
+        title: heroTitle,
+        subtitle: heroSubtitle
       }
       
-      console.log('Homepage loaded data:', homePageContent)
-      console.log('Hero data:', homePageContent.hero)
+      console.log('Homepage loaded data:', JSON.stringify(homePageContent, null, 2))
+      console.log('Hero data:', JSON.stringify(homePageContent.hero, null, 2))
+      console.log('Hero title value:', homePageContent.hero?.title)
+      console.log('Hero subtitle value:', homePageContent.hero?.subtitle)
       setPageData(homePageContent)
     } catch (error) {
       console.error('Error loading page content:', error)
@@ -176,7 +182,9 @@ export default function Home() {
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">
-              {hero.title || (
+              {hero.title ? (
+                hero.title
+              ) : (
                 <>
                   Empowering Future
                   <span className="block bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 bg-clip-text text-transparent animate-gradient">
