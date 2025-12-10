@@ -74,6 +74,15 @@ export default function ComprehensivePageEditor({
   const renderSectionEditor = (sectionKey, sectionTitle, fields = []) => {
     const section = pageData[sectionKey] || {}
     const isExpanded = expandedSections[sectionKey]
+    
+    // Check if section has any content
+    const hasContent = section && Object.keys(section).some(key => {
+      const value = section[key]
+      if (Array.isArray(value)) return value.length > 0
+      if (typeof value === 'string') return value.trim().length > 0
+      if (typeof value === 'object' && value !== null) return Object.keys(value).length > 0
+      return false
+    })
 
     return (
       <div key={sectionKey} className="border border-gray-200 rounded-lg mb-4">

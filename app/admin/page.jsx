@@ -157,8 +157,12 @@ export default function Admin() {
                   } else {
                     output[key] = mergeDeep(target[key], source[key])
                   }
+                } else if (Array.isArray(source[key])) {
+                  // Handle arrays - use source if it has items, otherwise keep target
+                  output[key] = source[key].length > 0 ? source[key] : (target[key] || [])
                 } else {
-                  output[key] = source[key]
+                  // For strings and other primitives, use source if it has value
+                  output[key] = source[key] || target[key] || ''
                 }
               })
             }
@@ -166,9 +170,15 @@ export default function Admin() {
           }
           
           // Merge loaded data with default structure
-          const merged = mergeDeep(pageContent, data.pageContent)
-          setPageContent(merged)
-          console.log('Loaded page content:', merged)
+          try {
+            const merged = mergeDeep(pageContent, data.pageContent)
+            setPageContent(merged)
+            console.log('Loaded page content:', merged)
+          } catch (error) {
+            console.error('Error merging page content:', error)
+            // Fallback: use loaded data directly if merge fails
+            setPageContent(data.pageContent)
+          }
         }
       }
     } catch (error) {
