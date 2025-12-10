@@ -30,22 +30,32 @@ export default function Home() {
 
   const loadPageContent = async () => {
     try {
-      const response = await fetch('/api/settings')
+      const response = await fetch('/api/settings', {
+        cache: 'no-store' // Prevent caching
+      })
       const settings = await response.json()
       
       // Merge pageContent.home with content object for backward compatibility
       const homePageContent = settings.pageContent?.home || {}
       const generalContent = settings.content || {}
       
-      // If hero title/subtitle exist in content object, use them
-      if (generalContent.heroTitle && !homePageContent.hero?.title) {
+      // Prioritize pageContent.home.hero, but fallback to content if needed
+      if (homePageContent.hero) {
+        // Use pageContent.home.hero (this is the primary source)
         homePageContent.hero = {
           ...homePageContent.hero,
+          title: homePageContent.hero.title || generalContent.heroTitle || '',
+          subtitle: homePageContent.hero.subtitle || generalContent.heroSubtitle || ''
+        }
+      } else if (generalContent.heroTitle) {
+        // Fallback to content object if pageContent.home.hero doesn't exist
+        homePageContent.hero = {
           title: generalContent.heroTitle,
-          subtitle: generalContent.heroSubtitle || homePageContent.hero?.subtitle || ''
+          subtitle: generalContent.heroSubtitle || ''
         }
       }
       
+      console.log('Homepage loaded data:', homePageContent)
       setPageData(homePageContent)
     } catch (error) {
       console.error('Error loading page content:', error)

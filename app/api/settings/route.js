@@ -5,7 +5,8 @@ export async function GET() {
   try {
     await connectDB()
     
-    let settings = await Settings.findOne()
+    // Use findOne with sort to get the latest, and disable caching
+    let settings = await Settings.findOne().sort({ updatedAt: -1 }).lean()
     
     if (!settings) {
       // Return default settings if none exist
