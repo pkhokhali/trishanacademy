@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { 
   BookOpen, 
@@ -20,35 +21,78 @@ import {
 } from 'lucide-react'
 
 export default function Home() {
-  const features = [
-    {
-      icon: <BookOpen className="h-8 w-8" />,
-      title: 'Quality Education',
-      description: 'Comprehensive curriculum designed to foster critical thinking and creativity.'
-    },
-    {
-      icon: <Users className="h-8 w-8" />,
-      title: 'Expert Faculty',
-      description: 'Dedicated teachers committed to student success and personal growth.'
-    },
-    {
-      icon: <Award className="h-8 w-8" />,
-      title: 'Academic Excellence',
-      description: 'Consistently high achievement rates and outstanding student outcomes.'
-    },
-    {
-      icon: <GraduationCap className="h-8 w-8" />,
-      title: 'Holistic Development',
-      description: 'Nurturing well-rounded individuals through diverse programs and activities.'
-    }
-  ]
+  const [pageData, setPageData] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  const stats = [
-    { number: '5000+', label: 'Students Enrolled', icon: <Users className="h-6 w-6" />, color: 'from-blue-500 to-blue-600' },
-    { number: '200+', label: 'Expert Teachers', icon: <GraduationCap className="h-6 w-6" />, color: 'from-purple-500 to-purple-600' },
-    { number: '95%', label: 'Success Rate', icon: <TrendingUp className="h-6 w-6" />, color: 'from-green-500 to-green-600' },
-    { number: '25+', label: 'Years of Excellence', icon: <Award className="h-6 w-6" />, color: 'from-orange-500 to-orange-600' }
-  ]
+  useEffect(() => {
+    loadPageContent()
+  }, [])
+
+  const loadPageContent = async () => {
+    try {
+      const response = await fetch('/api/settings')
+      const settings = await response.json()
+      setPageData(settings.pageContent?.home || {})
+    } catch (error) {
+      console.error('Error loading page content:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  // Default content if not loaded or not set
+  const hero = pageData?.hero || {}
+  const statsData = pageData?.stats || {}
+  const featuresData = pageData?.features || {}
+  const programsData = pageData?.programs || {}
+  const testimonialsData = pageData?.testimonials || {}
+
+  const features = featuresData.items && featuresData.items.length > 0 
+    ? featuresData.items.map((item, index) => ({
+        icon: <BookOpen className="h-8 w-8" />,
+        title: item.title || 'Feature',
+        description: item.description || ''
+      }))
+    : [
+        {
+          icon: <BookOpen className="h-8 w-8" />,
+          title: 'Quality Education',
+          description: 'Comprehensive curriculum designed to foster critical thinking and creativity.'
+        },
+        {
+          icon: <Users className="h-8 w-8" />,
+          title: 'Expert Faculty',
+          description: 'Dedicated teachers committed to student success and personal growth.'
+        },
+        {
+          icon: <Award className="h-8 w-8" />,
+          title: 'Academic Excellence',
+          description: 'Consistently high achievement rates and outstanding student outcomes.'
+        },
+        {
+          icon: <GraduationCap className="h-8 w-8" />,
+          title: 'Holistic Development',
+          description: 'Nurturing well-rounded individuals through diverse programs and activities.'
+        }
+      ]
+
+  const stats = statsData.items && statsData.items.length > 0
+    ? statsData.items.map((item, index) => ({
+        number: item.number || '0',
+        label: item.label || 'Stat',
+        icon: <Users className="h-6 w-6" />,
+        color: item.iconColor || 'from-blue-500 to-blue-600'
+      }))
+    : [
+        { number: '5000+', label: 'Students Enrolled', icon: <Users className="h-6 w-6" />, color: 'from-blue-500 to-blue-600' },
+        { number: '200+', label: 'Expert Teachers', icon: <GraduationCap className="h-6 w-6" />, color: 'from-purple-500 to-purple-600' },
+        { number: '95%', label: 'Success Rate', icon: <TrendingUp className="h-6 w-6" />, color: 'from-green-500 to-green-600' },
+        { number: '25+', label: 'Years of Excellence', icon: <Award className="h-6 w-6" />, color: 'from-orange-500 to-orange-600' }
+      ]
+
+  if (loading) {
+    return <div className="pt-20 min-h-screen flex items-center justify-center">Loading...</div>
+  }
 
   const programs = [
     {
@@ -71,7 +115,14 @@ export default function Home() {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <section className="relative min-h-[95vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700">
+      <section 
+        className="relative min-h-[95vh] flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: hero.backgroundImage ? `url(${hero.backgroundImage})` : undefined,
+          backgroundColor: hero.backgroundColor || undefined,
+          background: hero.backgroundGradient || 'linear-gradient(to bottom right, #2563eb, #1e40af, #1e3a8a)'
+        }}
+      >
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary-400 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-blob"></div>
@@ -96,15 +147,26 @@ export default function Home() {
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white">
-              Empowering Future
-              <span className="block bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 bg-clip-text text-transparent animate-gradient">
-                Leaders
-              </span>
+              {hero.title || (
+                <>
+                  Empowering Future
+                  <span className="block bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-300 bg-clip-text text-transparent animate-gradient">
+                    Leaders
+                  </span>
+                </>
+              )}
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
-              Trishan Academy is dedicated to nurturing young minds through innovative 
-              education, personalized learning, and holistic development.
-            </p>
+            {hero.subtitle ? (
+              <div 
+                className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light"
+                dangerouslySetInnerHTML={{ __html: hero.subtitle }}
+              />
+            ) : (
+              <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed font-light">
+                Trishan Academy is dedicated to nurturing young minds through innovative 
+                education, personalized learning, and holistic development.
+              </p>
+            )}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <Link
                 href="/contact"
@@ -152,7 +214,13 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white relative overflow-hidden">
+      <section 
+        className="py-20 relative overflow-hidden"
+        style={{
+          backgroundColor: statsData.backgroundColor || '#ffffff',
+          backgroundImage: statsData.backgroundImage ? `url(${statsData.backgroundImage})` : undefined
+        }}
+      >
         <div className="absolute inset-0 bg-gradient-to-r from-primary-50/50 via-transparent to-primary-50/50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
@@ -175,7 +243,14 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative">
+      <section 
+        className="py-24 relative"
+        style={{
+          backgroundColor: featuresData.backgroundColor || undefined,
+          backgroundImage: featuresData.backgroundImage ? `url(${featuresData.backgroundImage})` : undefined,
+          background: featuresData.backgroundImage ? undefined : (featuresData.backgroundColor || 'linear-gradient(to bottom, #f9fafb, #ffffff, #f9fafb)')
+        }}
+      >
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-200 to-transparent"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
