@@ -103,15 +103,39 @@ export default function PageEditor({ pageId, onClose }) {
   const savePage = async () => {
     if (!page) return
     
+    // Validate required fields
+    if (!page.title || page.title.trim() === '') {
+      alert('Please enter a page title')
+      return
+    }
+    
+    if (!page.slug || page.slug.trim() === '') {
+      alert('Please enter a page slug (e.g., "about", "contact")')
+      return
+    }
+    
+    // Validate slug format
+    const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+    if (!slugRegex.test(page.slug)) {
+      alert('Slug must contain only lowercase letters, numbers, and hyphens (e.g., "my-page")')
+      return
+    }
+    
     setSaving(true)
     try {
       const url = pageId ? `/api/pages/${pageId}` : '/api/pages'
       const method = pageId ? 'PUT' : 'POST'
       
+      // Ensure contentBlocks is an array
+      const pageToSave = {
+        ...page,
+        contentBlocks: Array.isArray(page.contentBlocks) ? page.contentBlocks : []
+      }
+      
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(page)
+        body: JSON.stringify(pageToSave)
       })
       
       const data = await res.json()
@@ -123,12 +147,16 @@ export default function PageEditor({ pageId, onClose }) {
           // Save to undo stack
           setUndoStack(prev => [...prev, JSON.stringify(page)])
           setRedoStack([])
+          // Reload page data to get updated version
+          loadPage()
         }
-        alert('Page saved successfully!')
+        alert(`Page saved successfully! ${page.status === 'published' ? 'View it at /pages/' + page.slug : 'Remember to publish it to make it visible.'}`)
+      } else {
+        alert(data.error || 'Error saving page')
       }
     } catch (error) {
       console.error('Error saving page:', error)
-      alert('Error saving page')
+      alert('Error saving page: ' + error.message)
     } finally {
       setSaving(false)
     }
@@ -397,7 +425,10 @@ export default function PageEditor({ pageId, onClose }) {
           {page.contentBlocks.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-64 text-gray-400">
               <Plus className="w-12 h-12 mb-4" />
-              <p>Add blocks from the left sidebar to build your page</p>
+              <p className="mb-2">Add blocks from the left sidebar to build your page</p>
+              <p className="text-sm text-gray-500">
+                Don&apos;t forget to set a slug and publish the page to make it visible!
+              </p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -736,14 +767,27 @@ function PageSettings({ page, onUpdate, onShowRevisions }) {
         
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Slug</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Slug <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               value={page.slug || ''}
-              onChange={(e) => onUpdate({ slug: e.target.value })}
+              onChange={(e) => {
+                // Auto-format slug: lowercase, replace spaces with hyphens
+                const formatted = e.target.value
+                  .toLowerCase()
+                  .replace(/\s+/g, '-')
+                  .replace(/[^a-z0-9-]/g, '')
+                onUpdate({ slug: formatted })
+              }}
               className="w-full px-3 py-2 border rounded-lg"
               placeholder="page-slug"
+              required
             />
+            <p className="text-xs text-gray-500 mt-1">
+              URL: /pages/{page.slug || 'page-slug'}
+            </p>
           </div>
           
           <div>
@@ -753,11 +797,21 @@ function PageSettings({ page, onUpdate, onShowRevisions }) {
               onChange={(e) => onUpdate({ status: e.target.value })}
               className="w-full px-3 py-2 border rounded-lg"
             >
-              <option value="draft">Draft</option>
-              <option value="published">Published</option>
+              <option value="draft">Draft (not visible to public)</option>
+              <option value="published">Published (visible to public)</option>
               <option value="scheduled">Scheduled</option>
               <option value="archived">Archived</option>
             </select>
+            {page.status === 'draft' && (
+              <p className="text-xs text-yellow-600 mt-1">
+                ⚠️ This page is a draft and won&apos;t be visible until published
+              </p>
+            )}
+            {page.status === 'published' && page.slug && (
+              <p className="text-xs text-green-600 mt-1">
+                ✓ Page is live at: <a href={`/pages/${page.slug}`} target="_blank" className="underline">/pages/{page.slug}</a>
+              </p>
+            )}
           </div>
         </div>
       </div>

@@ -43,27 +43,43 @@ export async function generateMetadata({ params }) {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function DynamicPage({ params }) {
-  await connectDB()
-  const { slug } = params
-  
-  const page = await Page.findOne({ 
-    slug,
-    status: { $in: ['published', 'scheduled'] }
-  }).lean()
-  
-  if (!page) {
-    notFound()
-  }
-  
-  // Check if scheduled page should be visible
-  if (page.status === 'scheduled' && page.scheduledAt) {
-    const now = new Date()
-    if (new Date(page.scheduledAt) > now) {
+  try {
+    await connectDB()
+    const { slug } = params
+    
+    const page = await Page.findOne({ 
+      slug,
+      status: { $in: ['published', 'scheduled'] }
+    }).lean()
+    
+    if (!page) {
+      console.log(`Page not found for slug: ${slug}`)
       notFound()
     }
+    
+    // Check if scheduled page should be visible
+    if (page.status === 'scheduled' && page.scheduledAt) {
+      const now = new Date()
+      if (new Date(page.scheduledAt) > now) {
+        console.log(`Page ${slug} is scheduled for future: ${page.scheduledAt}`)
+        notFound()
+      }
+    }
+    
+    // Ensure contentBlocks is an array
+    if (!Array.isArray(page.contentBlocks)) {
+      page.contentBlocks = []
+    }
+    
+    console.log(`Rendering page: ${slug} with ${page.contentBlocks.length} blocks`)
+    
+    return <PageRenderer page={page} />
+  } catch (error) {
+    console.error('Error rendering page:', error)
+    notFound()
   }
-  
-  return <PageRenderer page={page} />
 }
 

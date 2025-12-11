@@ -3,19 +3,35 @@
 import { useEffect, useState } from 'react'
 
 export default function PageRenderer({ page }) {
-  const [mounted, setMounted] = useState(false)
+  if (!page) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Page Not Found</h1>
+          <p className="text-gray-600">The page you're looking for doesn't exist.</p>
+        </div>
+      </div>
+    )
+  }
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
+  if (!page.contentBlocks || page.contentBlocks.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">{page.title || 'Empty Page'}</h1>
+          <p className="text-gray-600">This page has no content yet.</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen">
-      {page.contentBlocks?.map((block, index) => (
-        <BlockRenderer key={block.id || index} block={block} />
-      ))}
+      {page.contentBlocks
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+        .map((block, index) => (
+          <BlockRenderer key={block.id || `block-${index}`} block={block} />
+        ))}
     </div>
   )
 }
