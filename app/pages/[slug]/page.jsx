@@ -74,7 +74,8 @@ export default async function DynamicPage({ params }) {
       page.contentBlocks = []
     }
     
-    console.log(`Rendering page: ${slug} with ${page.contentBlocks.length} blocks`)
+    // Sort blocks by order
+    page.contentBlocks.sort((a, b) => (a.order || 0) - (b.order || 0))
     
     return <PageRenderer page={page} />
   } catch (error) {
