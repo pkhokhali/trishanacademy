@@ -11,6 +11,7 @@ export default function RevisionHistory({ pageId, onRestore }) {
     if (pageId) {
       fetchRevisions()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageId])
 
   const fetchRevisions = async () => {

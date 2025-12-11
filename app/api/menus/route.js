@@ -3,6 +3,8 @@ import connectDB from '@/lib/mongodb'
 import Menu from '@/models/Menu'
 import { verifyToken } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/menus - List all menus
 export async function GET(request) {
   try {

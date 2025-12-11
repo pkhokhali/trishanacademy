@@ -12,7 +12,7 @@ import {
   Download
 } from 'lucide-react'
 
-export default function MediaLibrary({ isOpen, onClose, onSelect, multiple = false }) {
+export default function MediaLibrary({ isOpen = true, onClose, onSelect, multiple = false, standalone = false }) {
   const [media, setMedia] = useState([])
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -24,6 +24,7 @@ export default function MediaLibrary({ isOpen, onClose, onSelect, multiple = fal
     if (isOpen) {
       fetchMedia()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, search])
 
   const fetchMedia = async () => {
@@ -107,11 +108,14 @@ export default function MediaLibrary({ isOpen, onClose, onSelect, multiple = fal
 
   if (!isOpen && !standalone) return null
 
-  const containerClass = standalone ? "w-full" : "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
-  const contentClass = standalone ? "w-full h-full" : "bg-white rounded-lg shadow-xl w-full max-w-6xl h-[90vh] flex flex-col"
+  const containerClass = standalone ? "w-full h-full flex flex-col" : "fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  const contentClass = standalone ? "w-full h-full flex flex-col bg-white" : "bg-white rounded-lg shadow-xl w-full max-w-6xl h-[90vh] flex flex-col"
 
   return (
     <div className={containerClass}>
+      {!standalone && (
+        <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
+      )}
       <div className={contentClass} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">

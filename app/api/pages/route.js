@@ -3,6 +3,9 @@ import connectDB from '@/lib/mongodb'
 import Page from '@/models/Page'
 import Revision from '@/models/Revision'
 import { verifyToken } from '@/lib/auth'
+import { checkPermission, canPublish } from '@/lib/permissions'
+
+export const dynamic = 'force-dynamic'
 
 // GET /api/pages - List all pages
 export async function GET(request) {
@@ -76,6 +79,26 @@ export async function POST(request) {
     
     const body = await request.json()
     const { title, slug, status = 'draft', contentBlocks = [], ...rest } = body
+    
+    // Check create permission
+    const createPermission = await checkPermission(decoded.userId, 'create:page')
+    if (!createPermission.allowed) {
+      return NextResponse.json(
+        { success: false, error: createPermission.reason || 'Permission denied' },
+        { status: 403 }
+      )
+    }
+    
+    // Check publish permission if status is published
+    if (status === 'published') {
+      const publishAllowed = await canPublish(decoded.userId)
+      if (!publishAllowed) {
+        return NextResponse.json(
+          { success: false, error: 'You do not have permission to publish pages. Status set to draft.' },
+          { status: 403 }
+        )
+      }
+    }
     
     // Check if slug exists
     const existing = await Page.findOne({ slug })

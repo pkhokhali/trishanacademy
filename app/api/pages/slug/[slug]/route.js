@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Page from '@/models/Page'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/pages/slug/:slug - Get page by slug (public)
 export async function GET(request, { params }) {
   try {

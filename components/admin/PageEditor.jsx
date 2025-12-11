@@ -82,6 +82,7 @@ export default function PageEditor({ pageId, onClose }) {
       })
       setLoading(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageId])
 
   const loadPage = async () => {
@@ -292,7 +293,8 @@ export default function PageEditor({ pageId, onClose }) {
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [page])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (loading) {
     return (

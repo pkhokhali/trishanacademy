@@ -13,6 +13,7 @@ export default function MenuManager() {
   useEffect(() => {
     fetchMenus()
     fetchPages()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const fetchMenus = async () => {

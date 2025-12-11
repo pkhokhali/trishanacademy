@@ -3,6 +3,8 @@ import connectDB from '@/lib/mongodb'
 import Theme from '@/models/Theme'
 import { verifyToken } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/themes - List all themes
 export async function GET(request) {
   try {

@@ -2,7 +2,11 @@ import { NextResponse } from 'next/server'
 import connectDB from '@/lib/mongodb'
 import Page from '@/models/Page'
 import Revision from '@/models/Revision'
+import User from '@/models/User'
 import { verifyToken } from '@/lib/auth'
+import { checkPermission, canPublish } from '@/lib/permissions'
+
+export const dynamic = 'force-dynamic'
 
 // GET /api/pages/:id - Get single page
 export async function GET(request, { params }) {
@@ -58,7 +62,7 @@ export async function PUT(request, { params }) {
     }
     
     const body = await request.json()
-    const page = await Page.findById(id)
+    const page = await Page.findById(id).populate('permissions.users')
     
     if (!page) {
       return NextResponse.json(
@@ -67,8 +71,25 @@ export async function PUT(request, { params }) {
       )
     }
     
-    // Check permissions
-    // TODO: Add role-based permission check
+    // Check edit permission
+    const editPermission = await checkPermission(decoded.userId, 'edit:page', page)
+    if (!editPermission.allowed) {
+      return NextResponse.json(
+        { success: false, error: editPermission.reason || 'Permission denied' },
+        { status: 403 }
+      )
+    }
+    
+    // Check publish permission if status is being changed to published
+    if (body.status === 'published' && page.status !== 'published') {
+      const publishAllowed = await canPublish(decoded.userId, page)
+      if (!publishAllowed) {
+        return NextResponse.json(
+          { success: false, error: 'You do not have permission to publish pages' },
+          { status: 403 }
+        )
+      }
+    }
     
     // Save current version as revision
     const currentVersion = page.version || 1
@@ -136,8 +157,14 @@ export async function DELETE(request, { params }) {
       )
     }
     
-    // Check if user is SuperAdmin or Admin
-    // TODO: Add role check
+    // Check delete permission
+    const deletePermission = await checkPermission(decoded.userId, 'delete:page')
+    if (!deletePermission.allowed) {
+      return NextResponse.json(
+        { success: false, error: deletePermission.reason || 'Permission denied' },
+        { status: 403 }
+      )
+    }
     
     const page = await Page.findByIdAndDelete(id)
     

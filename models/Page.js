@@ -76,8 +76,7 @@ const pageSchema = new mongoose.Schema({
   timestamps: true
 })
 
-// Indexes
-pageSchema.index({ slug: 1 })
+// Indexes (slug already indexed via unique: true)
 pageSchema.index({ status: 1 })
 pageSchema.index({ parentId: 1 })
 pageSchema.index({ menuGroup: 1, menuOrder: 1 })

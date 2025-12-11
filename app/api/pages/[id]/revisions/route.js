@@ -3,6 +3,8 @@ import connectDB from '@/lib/mongodb'
 import Revision from '@/models/Revision'
 import Page from '@/models/Page'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/pages/:id/revisions - Get all revisions for a page
 export async function GET(request, { params }) {
   try {

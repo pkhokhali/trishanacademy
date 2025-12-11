@@ -5,6 +5,8 @@ import { verifyToken } from '@/lib/auth'
 import { unlink } from 'fs/promises'
 import path from 'path'
 
+export const dynamic = 'force-dynamic'
+
 // GET /api/media/:id - Get single media
 export async function GET(request, { params }) {
   try {

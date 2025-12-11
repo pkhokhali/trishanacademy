@@ -25,6 +25,7 @@ export default function PagesList() {
 
   useEffect(() => {
     fetchPages()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, statusFilter])
 
   const fetchPages = async () => {
