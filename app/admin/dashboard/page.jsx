@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
   FileText,
-  Image,
+  Image as ImageIcon,
   Users,
   Eye,
   Plus,
@@ -89,7 +89,7 @@ export default function Dashboard() {
     {
       title: 'Media Files',
       value: stats.media,
-      icon: Image,
+      icon: ImageIcon,
       color: 'purple',
       link: '/admin/media'
     },
@@ -154,7 +154,7 @@ export default function Dashboard() {
             onClick={() => router.push('/admin/media')}
             className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
           >
-            <Image className="w-4 h-4" />
+            <ImageIcon className="w-4 h-4" />
             Upload Media
           </button>
           <button

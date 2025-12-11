@@ -112,7 +112,7 @@ export default function ThemeSettings() {
     <div className="p-8">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900">Theme Settings</h1>
-        <p className="mt-2 text-gray-600">Customize your website's appearance</p>
+        <p className="mt-2 text-gray-600">Customize your website&apos;s appearance</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
